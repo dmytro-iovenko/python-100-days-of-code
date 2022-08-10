@@ -10,5 +10,5 @@ https://replit.com/@LiudmylaIovenko/band-name-generator
 4. Combine the name of their city and pet and show them their band name.
 
 ### Learning Objectives
-* Practice getting userinputs
+* Practice getting inputs
 * Practice string manipulation
