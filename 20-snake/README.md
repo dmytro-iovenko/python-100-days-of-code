@@ -6,3 +6,4 @@ https://replit.com/@LiudmylaIovenko/20-snake
 ### Learning Objectives
 * Practice using Turtle graphics
 * Practice using Keypress
+* Practice using Turtle coordinate system
