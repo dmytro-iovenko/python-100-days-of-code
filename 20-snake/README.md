@@ -7,3 +7,4 @@ https://replit.com/@LiudmylaIovenko/20-snake
 * Practice using Turtle graphics
 * Practice using Keypress
 * Practice using Turtle coordinate system
+* Practice reading a writing to a file
