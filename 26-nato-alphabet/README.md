@@ -7,3 +7,4 @@ https://replit.com/@LiudmylaIovenko/26-nato-alphabet
 * Practice reading CSV data
 * Practice iterating over a Pandas DataFrame
 * Practice using List Comprehension and Dictionary Comprehension
+* Practice exception handling
