@@ -13,10 +13,6 @@ def get_all_posts():
 def about():
     return render_template("about.html")
 
-@app.route("/contact")
-def contact():
-    return render_template("contact.html")
-
 @app.route("/post/<int:index>")
 def show_post(index):
     requested_post = None
@@ -25,14 +21,16 @@ def show_post(index):
             requested_post = blog_post
     return render_template("post.html", post=requested_post)
 
-@app.route("/form-entry", methods=["POST"])
-def receive_data():
-    data = request.form
-    print(data["name"])
-    print(data["email"])
-    print(data["phone"])
-    print(data["message"])
-    return "<h1>Successfully sent your message</h1>"
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "POST":
+        data = request.form
+        print(data["name"])
+        print(data["email"])
+        print(data["phone"])
+        print(data["message"])
+        return "<h1>Successfully sent your message</h1>"
+    return render_template("contact.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
