@@ -25,5 +25,14 @@ def show_post(index):
             requested_post = blog_post
     return render_template("post.html", post=requested_post)
 
+@app.route("/form-entry", methods=["POST"])
+def receive_data():
+    data = request.form
+    print(data["name"])
+    print(data["email"])
+    print(data["phone"])
+    print(data["message"])
+    return "<h1>Successfully sent your message</h1>"
+
 if __name__ == "__main__":
     app.run(debug=True)
