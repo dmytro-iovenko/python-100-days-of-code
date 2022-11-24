@@ -14,9 +14,10 @@ app.secret_key = "any-string-you-want-just-keep-it-secret"
 def home():
     return render_template("index.html")
 
-@app.route("/login")
+@app.route("/login", method=["GET", "POST"])
 def login():
     login_form = LoginForm()
+    login_form.validate_on_submit()
     return render_template("login.html", form=login_form)
 
 if __name__ == '__main__':
