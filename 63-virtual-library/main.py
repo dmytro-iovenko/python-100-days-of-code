@@ -12,7 +12,7 @@ def home():
 
 @app.route("/add")
 def add():
-    pass
+    return render_template("add.html")
 
 
 if __name__ == "__main__":
