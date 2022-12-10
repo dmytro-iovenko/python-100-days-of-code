@@ -15,6 +15,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+MOVIE_DB_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
+MOVIE_DB_API_KEY = "123456789"   # your API key here
 
 ##CREATE TABLE
 class Movie(db.Model):
@@ -71,6 +73,13 @@ def delete_movie():
 @app.route("/add", methods=["GET", "POST"])
 def add_movie():
     form = FindMovieForm()
+    
+    if form.validate_on_submit():
+        movie_title = form.title.data
+        response = requests.get(MOVIE_DB_SEARCH_URL, params={"api_key": MOVIE_DB_API_KEY, "query": movie_title})
+        data = response.json()["results"]
+        return render_template("select.html", options=data)
+      
     return render_template("add.html", form=form)
 
 
