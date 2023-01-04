@@ -65,6 +65,13 @@ def get_all_posts():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        
+        #If user's email already exists
+        if User.query.filter_by(email=form.email.data).first():
+            #Send flash messsage
+            flash("You've already signed up with that email, log in instead!")
+            #Redirect to /login route.
+            return redirect(url_for('login'))
 
         hash_and_salted_password = generate_password_hash(
             form.password.data,
@@ -78,7 +85,7 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        
+        login_user(new_user)
         return redirect(url_for("get_all_posts"))
 
     return render_template("register.html", form=form)
