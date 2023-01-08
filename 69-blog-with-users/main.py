@@ -10,6 +10,7 @@ from flask_gravatar import Gravatar
 #Import RegisterForm from forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm
 from functools import wraps
+from flask_gravatar import Gravatar
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -21,6 +22,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+##CREATE GRAVATAR
+gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=False, force_lower=False, use_ssl=False, base_url=None)
 
 ##CONFIGURE TABLES
 
