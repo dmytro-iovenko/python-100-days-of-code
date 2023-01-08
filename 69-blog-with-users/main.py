@@ -39,6 +39,9 @@ class BlogPost(db.Model):
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
 
+    #***************Parent Relationship*************#
+    comments = relationship("Comment", back_populates="parent_post")
+
 
 #Create the User Table
 class User(UserMixin, db.Model):
@@ -55,6 +58,11 @@ class User(UserMixin, db.Model):
     #*******Add parent relationship*******#
     #"comment_author" refers to the comment_author property in the Comment class.
     comments = relationship("Comment", back_populates="comment_author")
+
+    #***************Child Relationship*************#
+    post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
+    parent_post = relationship("BlogPost", back_populates="comments")
+    text = db.Column(db.Text, nullable=False)
 
 
 #Create the Comment Table
