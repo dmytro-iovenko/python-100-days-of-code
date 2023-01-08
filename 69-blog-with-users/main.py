@@ -52,12 +52,23 @@ class User(UserMixin, db.Model):
     #The "author" refers to the author property in the BlogPost class.
     posts = relationship("BlogPost", back_populates="author")
     
+    #*******Add parent relationship*******#
+    #"comment_author" refers to the comment_author property in the Comment class.
+    comments = relationship("Comment", back_populates="comment_author")
+
 
 #Create the Comment Table
 class Comment(db.Model):
     __tablename__ = "comments"
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
+
+    #*******Add child relationship*******#
+    #"users.id" The users refers to the tablename of the Users class.
+    #"comments" refers to the comments property in the User class.
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    comment_author = relationship("User", back_populates="comments")
+
 
 # Create all the tables in the database
 db.create_all()
