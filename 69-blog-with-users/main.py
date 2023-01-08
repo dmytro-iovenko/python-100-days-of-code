@@ -53,6 +53,12 @@ class User(UserMixin, db.Model):
     posts = relationship("BlogPost", back_populates="author")
     
 
+#Create the Comment Table
+class Comment(db.Model):
+    __tablename__ = "comments"
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+
 # Create all the tables in the database
 db.create_all()
 
