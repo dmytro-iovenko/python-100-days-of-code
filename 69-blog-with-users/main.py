@@ -147,8 +147,9 @@ def logout():
 
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
+    comment_form = CommentForm()
     requested_post = BlogPost.query.get(post_id)
-    return render_template("post.html", post=requested_post, form=form, current_user=current_user)
+    return render_template("post.html", post=requested_post, form=comment_form, current_user=current_user)
 
 
 @app.route("/about")
