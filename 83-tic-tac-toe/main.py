@@ -1,21 +1,22 @@
 import random
 
 def printBoard(board):
+    print("")
     for row in range(len(board)):
         print(*board[row])
 
 
 def askUser(board):
-    row = int(input("Pick a row:"
-                    "[upper row: enter 0, middle row: enter 1, bottom row: enter 2]:"))
-    column = int(input("Pick a column:"
-                       "[left column: enter 0, middle column: enter 1, right column enter 2]"))
+    row = int(input("Pick a row: "
+                    "[upper row: enter 0, middle row: enter 1, bottom row: enter 2]: "))
+    column = int(input("Pick a column: "
+                       "[left column: enter 0, middle column: enter 1, right column enter 2] "))
     while(board[row][column] != '_'):
         print("Spot taken, try again: ")
-        row = int(input("Pick a row[upper row:"
-                        "[enter 0, middle row: enter 1, bottom row: enter 2]:"))
-        column = int(input("Pick a column:"
-                            "[left column: enter 0, middle column: enter 1, right column enter 2]"))   
+        row = int(input("Pick a row: "
+                        "[upper row: enter 0, middle row: enter 1, bottom row: enter 2]: "))
+        column = int(input("Pick a column: "
+                           "[left column: enter 0, middle column: enter 1, right column enter 2] "))   
     spot = [row, column]
     return spot
 
@@ -34,8 +35,9 @@ def checkWin(board):
                 break
         if (count == 3 or count == -3):
             return count
+        else:
+            count = 0
     
-    count = 0
     # check every column for a straight X or straight O
     for i in range(len(board)):
         for j in range(len(board[i])):
@@ -48,8 +50,9 @@ def checkWin(board):
                 break
         if (count == 3 or count == -3):
             return count
+        else:
+            count = 0
 
-    count = 0
     # check the left diagonal for a straight X or straight O
     for i in range(len(board)):
         if (board[i][i] == 'X'):
@@ -61,8 +64,9 @@ def checkWin(board):
             break
     if (count == 3 or count == -3):
         return count
+    else:
+        count = 0
     
-    count = 0
     # check the right diagonal for a straight X or straight O
     for i in range(len(board)):
         if (board[i][len(board) - 1 - i] == 'X'):
@@ -86,11 +90,11 @@ printBoard(board)
 for turn in range(9):
     # let the user choose a spot
     if (turn % 2 == 0):
-        print("Turn: X")
+        print("\nTurn: X")
         spot = askUser(board)
         board[spot[0]][spot[1]] = 'X'
     else:
-        print("Turn: O")
+        print("\nTurn: O")
         spot = askUser(board)
         board[spot[0]][spot[1]] = 'O'  
 
@@ -100,10 +104,10 @@ for turn in range(9):
     # determine the winner
     count = checkWin(board);
     if (count == 3):
-        print("X wins")
+        print("\nX wins!")
         exit()
     elif (count == -3):
-        print("O wins")
+        print("\nO wins!")
         exit();
 
-print("It's a tie!")
+print("\nIt's a tie!")
