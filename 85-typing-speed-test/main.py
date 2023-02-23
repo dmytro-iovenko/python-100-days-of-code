@@ -1,11 +1,18 @@
 from tkinter import *
 import random
+import math
+
+timer = None
 
 def start(event):
     global running
+    global timer
+
     if not running:
         if not event.keycode in [16, 17, 18]:
             running = True
+            timer = window.after(100, count, 0.1)
+
     if not label.cget('text').startswith(input_entry.get()):
         input_entry.config(fg="red")
     else:
@@ -14,13 +21,27 @@ def start(event):
         running = False
         input_entry.config(fg="green")
 
+# ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
+def count(counter):
+    global running
+    global timer
+
+    cps = len(input_entry.get()) / counter
+    cpm = cps * 60
+    wps = len(input_entry.get().split(" ")) / counter
+    wpm = wps * 60
+
+    speed_label.config(text=f"Speed: {cps:.2f} CPS, {cpm:.2f} CPM, {wps:.2f} WPS, {wpm:.2f} WPM")
+
+    if running:
+        timer = window.after(100, count, counter + 0.1)
+
 # create window
 window = Tk()
 window.title('Typing Speed Test')
 window.geometry("800x600")
 
 # adding the boolean to know that the app is started or not
-counter = 0
 running = False
 
 text = "test text".split("\n")
