@@ -53,7 +53,7 @@ window.geometry("800x600")
 # adding the boolean to know that the app is started or not
 running = False
 
-text = "test text".split("\n")
+text = open("text.txt", "r").read().split("\n")
 
 frame = Frame(window)
 
