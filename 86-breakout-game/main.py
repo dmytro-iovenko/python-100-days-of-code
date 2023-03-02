@@ -21,7 +21,7 @@ screen.onkey(key='Right', fun=paddle.move_right)
 game_is_on = True
 while game_is_on:
     screen.update()
-    time.sleep(0.03)
+    time.sleep(0.01)
     ball.move()
 
     # record x-axis coordinates of ball and paddle
@@ -75,5 +75,33 @@ while game_is_on:
                 ball.bounce(True, True)
             else:
                 ball.bounce(False, True)
+
+    for brick in bricks.bricks:
+        if (ball_x + 25 > brick.left_wall and 
+            ball_x - 25 < brick.right_wall and 
+            ball_y + 15 > brick.bottom_wall and 
+            ball_y - 15 < brick.upper_wall):
+
+            # detect collision from left
+            if ball_x < brick.left_wall:
+                ball.bounce(True, False)
+ 
+            # detect collision from right
+            elif ball_x > brick.right_wall:
+                ball.bounce(True, False)
+ 
+            # detect collision from bottom
+            elif ball_y < brick.bottom_wall:
+                ball.bounce(False, True)
+ 
+            # detect collision from top
+            elif ball_y > brick.upper_wall:
+                ball.bounce(False, True)
+ 
+            brick.quantity -= 1
+            if brick.quantity == 0:
+                brick.clear()
+                brick.goto(3000, 3000)
+                bricks.bricks.remove(brick)
 
 screen.exitonclick()
