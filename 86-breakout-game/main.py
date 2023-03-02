@@ -1,6 +1,7 @@
 from turtle import Screen, Turtle
 from paddle import Paddle
 from ball import Ball
+from bricks import Bricks
 import time
 
 screen = Screen()
@@ -10,6 +11,7 @@ screen.title("Breakout")
 screen.tracer(0)
 
 paddle = Paddle()
+bricks = Bricks()
 ball = Ball()
  
 screen.listen()
