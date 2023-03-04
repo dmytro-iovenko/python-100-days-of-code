@@ -2,6 +2,7 @@ from turtle import Screen, Turtle
 from paddle import Paddle
 from ball import Ball
 from bricks import Bricks
+from scoreboard import Scoreboard
 import time
 
 screen = Screen()
@@ -10,6 +11,7 @@ screen.setup(width=800, height=600)
 screen.title("Breakout")
 screen.tracer(0)
 
+score = Scoreboard(lives=5)
 paddle = Paddle()
 bricks = Bricks()
 ball = Ball()
@@ -42,6 +44,10 @@ while game_is_on:
     # thus he loses. The game resets.
     elif ball_y < -280:
         ball.reset()
+        score.decrease_lives()
+        if score.lives == 0:
+            score.reset()
+            game_is_on = False
 
     # check if ball's distance(from its middle)
     # from paddle(from its middle) is less than
@@ -98,6 +104,7 @@ while game_is_on:
             elif ball_y > brick.upper_wall:
                 ball.bounce(False, True)
  
+            score.increase_score()
             brick.quantity -= 1
             if brick.quantity == 0:
                 brick.clear()
