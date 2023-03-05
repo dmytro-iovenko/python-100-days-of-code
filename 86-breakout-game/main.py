@@ -3,6 +3,7 @@ from paddle import Paddle
 from ball import Ball
 from bricks import Bricks
 from scoreboard import Scoreboard
+from ui import UI
 import time
 
 screen = Screen()
@@ -10,6 +11,9 @@ screen.bgcolor("black")
 screen.setup(width=800, height=600)
 screen.title("Breakout")
 screen.tracer(0)
+
+ui = UI()
+ui.header()
 
 score = Scoreboard(lives=5)
 paddle = Paddle()
@@ -21,6 +25,7 @@ screen.onkey(key='Left', fun=paddle.move_left)
 screen.onkey(key='Right', fun=paddle.move_right)
  
 game_is_on = True
+
 while game_is_on:
     screen.update()
     time.sleep(0.01)
@@ -47,7 +52,9 @@ while game_is_on:
         score.decrease_lives()
         if score.lives == 0:
             score.reset()
-            game_is_on = False
+            ui.game_over(win=False)
+            break
+        ui.change_color()
 
     # check if ball's distance(from its middle)
     # from paddle(from its middle) is less than
@@ -110,5 +117,10 @@ while game_is_on:
                 brick.clear()
                 brick.goto(3000, 3000)
                 bricks.bricks.remove(brick)
+
+    # detect victory
+    if len(bricks.bricks) == 0:
+        ui.game_over(win=True)
+        break
 
 screen.exitonclick()
