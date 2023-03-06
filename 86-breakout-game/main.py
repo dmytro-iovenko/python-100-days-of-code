@@ -20,13 +20,24 @@ paddle = Paddle()
 bricks = Bricks()
 ball = Ball()
  
+def pause_game():
+    global game_paused
+    game_paused = not game_paused
+
 screen.listen()
 screen.onkey(key='Left', fun=paddle.move_left)
 screen.onkey(key='Right', fun=paddle.move_right)
+screen.onkey(key='space', fun=pause_game)
  
 game_is_on = True
+game_paused = False
 
 while game_is_on:
+
+    if game_paused:
+        ui.paused_status()
+        continue
+
     screen.update()
     time.sleep(0.01)
     ball.move()
