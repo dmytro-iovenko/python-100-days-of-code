@@ -73,32 +73,11 @@ while game_is_on:
     # coordinate to detect their collision
     elif ball.distance(paddle) < 110 and ball_y < -250:
  
-        # If Paddle is on Right of Screen
-        if paddle_x > 0:
-            if ball_x > paddle_x:
-                # If ball hits paddles left side it
-                # should go back to left
-                ball.bounce(True, True)
-            else:
-                ball.bounce(False, True)
- 
-        # If Paddle is left of Screen
-        elif paddle_x < 0:
-            if ball_x < paddle_x:
-                # If ball hits paddles left side it
-                # should go back to left
-                ball.bounce(True, True)
-            else:
-                ball.bounce(False, True)
- 
-        # Else Paddle is in the Middle horizontally
+        if ((ball_x > paddle_x + 35 and ball.x_move < 0) or
+            (ball_x < paddle_x - 35 and ball.x_move > 0)):
+            ball.bounce(True, True)
         else:
-            if ball_x > paddle_x:
-                ball.bounce(True, True)
-            elif ball_x < paddle_x:
-                ball.bounce(True, True)
-            else:
-                ball.bounce(False, True)
+            ball.bounce(False, True)
 
     for brick in bricks.bricks:
         if (ball_x + 25 > brick.left_wall and 
@@ -131,6 +110,7 @@ while game_is_on:
 
     # detect victory
     if len(bricks.bricks) == 0:
+        screen.update()
         ui.game_over(win=True)
         break
 
