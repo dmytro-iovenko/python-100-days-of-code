@@ -111,6 +111,7 @@ while game_is_on:
     # detect victory
     if len(bricks.bricks) == 0:
         screen.update()
+        score.reset()
         ui.game_over(win=True)
         break
 
