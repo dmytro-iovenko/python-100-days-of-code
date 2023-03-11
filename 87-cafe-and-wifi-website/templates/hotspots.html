@@ -1,0 +1,42 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+
+{% block title %}All WiFi Hotspots{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h1>All WiFi Hotspots</h1>
+
+	  <table class="table">
+
+	  <tr>
+	  {% for item in header %}
+	      <th>{{ item }}</th>
+	  {% endfor %}
+	  </tr>
+
+	  {% for row in hotspots %}
+	  <tr>
+	      {% for item in row %}
+	      <td>{{ item }}</td>
+	      {% endfor %}
+	  </tr>
+	  {% endfor %}
+  	  </table>
+      <p><a href="{{ url_for('home') }}">Return to index page</a></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
