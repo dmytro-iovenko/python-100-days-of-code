@@ -1,0 +1,35 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+
+{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+
+{% block title %}ToDo List{% endblock %}
+
+
+{% block content %}
+<div class="section mt-5">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-12">
+                <div id="main" class="card">
+                    <div class="card-body">
+                        <h1> Todo List </h1>
+                        <form id="task-form">
+                            <div class="form-group"> <label for="task">New Task</label> <input type="text" class="form-control" name="task" id="task" placeholder="Name ..."> </div> <button type="submit" class="btn btn-primary mt-2">Add task </button>
+                        </form>
+                        <hr>
+                        <h5> Tasks </h5>
+                        <div>
+                            <ul class="list-group pr-0">
+                                <li class="list-group-item d-flex align-items-center"> Task 1 <i class="fas fa-times text-danger mr-auto delete-item"></i> </li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>{% endblock %}
