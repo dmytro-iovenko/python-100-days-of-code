@@ -1,4 +1,5 @@
 {% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block styles %}
 
@@ -18,9 +19,7 @@
                 <div id="main" class="card">
                     <div class="card-body">
                         <h1> Todo List </h1>
-                        <form id="task-form">
-                            <div class="form-group"> <label for="task">New Task</label> <input type="text" class="form-control" name="task" id="task" placeholder="Name ..."> </div> <button type="submit" class="btn btn-primary mt-2">Add task </button>
-                        </form>
+                        {{ wtf.quick_form(form, novalidate=True) }}
                         <hr>
                         <h5> Tasks </h5>
                         <div>
