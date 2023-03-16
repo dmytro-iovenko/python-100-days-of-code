@@ -24,7 +24,11 @@
                         <h5> Tasks </h5>
                         <div>
                             <ul class="list-group pr-0">
-                                <li class="list-group-item d-flex align-items-center"> Task 1 <i class="fas fa-times text-danger mr-auto delete-item"></i> </li>
+                            {% for row in tasks %}
+                                {% for item in row %}
+                                <li class="list-group-item d-flex align-items-center"> {{ item }} <i class="fas fa-times text-danger mr-auto delete-item"></i> </li>
+                                {% endfor %}
+                            {% endfor %}
                             </ul>
                     </div>
                 </div>

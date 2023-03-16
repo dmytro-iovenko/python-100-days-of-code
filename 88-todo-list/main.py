@@ -16,7 +16,13 @@ class TaskForm(FlaskForm):
 @app.route("/", methods=["GET", "POST"])
 def home():
     form = TaskForm()
-    return render_template("index.html", form=form)
+
+    with open("tasks.csv", newline="") as csv_file:
+        csv_data = csv.reader(csv_file, delimiter=";")
+        list_of_rows = []
+        for row in csv_data:
+            list_of_rows.append(row)
+    return render_template("index.html", tasks=list_of_rows, form=form)
 
 
 if __name__ == "__main__":
