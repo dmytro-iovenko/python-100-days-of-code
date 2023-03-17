@@ -9,13 +9,23 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "c5e1d407e79c9b506d7f48d0677d9603"
 Bootstrap(app)
 
+try:
+    open("tasks.csv", "r")
+except FileNotFoundError:
+    open("tasks.csv", "w")
+
 class TaskForm(FlaskForm):
-    hotspot = StringField("Name ...", validators=[DataRequired()])
+    task = StringField("Name ...", validators=[DataRequired()])
     submit = SubmitField("Add task")
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     form = TaskForm()
+
+    if form.validate_on_submit():
+        with open("tasks.csv", "a") as csv_file:
+            csv_file.write(f"\n{form.task.data}")
+        form = TaskForm(formdata=None)
 
     with open("tasks.csv", newline="") as csv_file:
         csv_data = csv.reader(csv_file, delimiter=";")
