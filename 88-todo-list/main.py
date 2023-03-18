@@ -15,7 +15,7 @@ except FileNotFoundError:
     open("tasks.csv", "w")
 
 class TaskForm(FlaskForm):
-    task = StringField("Name ...", validators=[DataRequired()])
+    task = StringField("", validators=[DataRequired()], render_kw={"placeholder": "What do you need to do today?"})
     submit = SubmitField("Add task")
 
 @app.route("/", methods=["GET", "POST"])

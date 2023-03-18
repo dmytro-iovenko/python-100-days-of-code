@@ -4,6 +4,7 @@
 {% block styles %}
 
 {{ super() }}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 {% endblock %}
 
@@ -12,27 +13,35 @@
 
 
 {% block content %}
-<div class="section mt-5">
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-12">
-                <div id="main" class="card">
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row container d-flex justify-content-center">
+            <div class="col-md-12">
+                <div class="card px-3">
                     <div class="card-body">
-                        <h1> Todo List </h1>
-                        {{ wtf.quick_form(form, novalidate=True) }}
-                        <hr>
-                        <h5> Tasks </h5>
-                        <div>
-                            <ul class="list-group pr-0">
+                        <h4 class="card-title">Todo List</h4>
+                        <form action="" method="post" class="form" role="form" novalidate="">
+                            {{ form.csrf_token }}
+                            <div class="add-items d-flex">
+                                {{ form.task(class_="form-control todo-list-input") }} 
+                                {{ form.submit(class_="add btn btn-primary font-weight-bold todo-list-add-btn") }}
+                            </div>
+                        </form>
+                        <div class="list-wrapper">
+                            <ul class="d-flex flex-column-reverse todo-list">
                             {% for row in tasks %}
                                 {% for item in row %}
-                                <li class="list-group-item d-flex align-items-center"> {{ item }} <i class="fas fa-times text-danger mr-auto delete-item"></i> </li>
+                                <li>
+                                    <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> {{ item }} <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                </li>
                                 {% endfor %}
                             {% endfor %}
                             </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>{% endblock %}
+</div>
+{% endblock %}
