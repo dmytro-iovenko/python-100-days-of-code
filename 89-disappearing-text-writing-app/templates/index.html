@@ -1,0 +1,20 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+
+{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+
+{% block title %}Disappearing Text Writing App{% endblock %}
+
+
+{% block content %}
+<div class="content">
+    <div class="editor">
+        <textarea placeholder="Start typing..." spellcheck="false"></textarea>
+    </div>
+    <div class="wordcount">0 words</div>
+</div>
+{% endblock %}
