@@ -13,7 +13,7 @@
 {% block content %}
 <div class="content">
     <div class="editor">
-        <textarea placeholder="Start typing..." spellcheck="false"></textarea>
+        {{ form.text(onkeyup="alert('!!!')") }}
     </div>
     <div class="wordcount">0 words</div>
 </div>
