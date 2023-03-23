@@ -4,6 +4,7 @@ class Writing {
         this.run = false;
         this.startTime = null;
         this.timeSinceStroke = 0;
+        this.danger = 2;
         this.kill = 5;
         this.timerID = null;
     }
@@ -19,6 +20,12 @@ class Writing {
     tick = () => {
         if (!this.run) return;
         console.log(this.timeSinceStroke, this.kill)
+        if (this.timeSinceStroke >= this.danger) {
+           const editor = document.getElementById('editor')
+           if (!editor.classList.contains('danger')) editor.classList.add('danger');
+           const content = document.getElementById('content')
+           if (!content.classList.contains('danger')) content.classList.add('danger');
+        }
         if (this.timeSinceStroke >= this.kill) return this.fail();
         this.timeSinceStroke += 0.1;
     }
@@ -35,6 +42,9 @@ class Writing {
         clearInterval(this.timerID);
         this.timerID = null;
         document.getElementById('text').value = '';
+        document.getElementById('editor').classList.remove('danger');
+        document.getElementById('content').classList.remove('danger');
+        setTimeout(() => alert('You lose!'), 100);
     }
 
 }

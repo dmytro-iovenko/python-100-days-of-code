@@ -12,13 +12,26 @@ html,body{
     padding:0px
 }
 .content{
+    position:absolute;
+    height:100%;
     width:100%;
-    max-width:600px;
-    margin:0px auto;
-    position:relative;
-    height:calc(100% - 1px);
-    margin:0px auto;
-    padding-top:1px
+    color:#51565d;
+    font-weight:400;
+    -webkit-transition:-webkit-box-shadow .1s ease-in;
+    transition:-webkit-box-shadow .1s ease-in;
+    -o-transition:box-shadow .1s ease-in;
+    transition:box-shadow .1s ease-in;
+    transition:box-shadow .1s ease-in, -webkit-box-shadow .1s ease-in;
+    background-color:#fff
+}
+.content.danger{
+    -webkit-box-shadow:inset 0px 0px 40px 2px #f45653;
+    box-shadow:inset 0px 0px 40px 2px #f45653;
+    -webkit-transition:-webkit-box-shadow 3s ease-in;
+    transition:-webkit-box-shadow 3s ease-in;
+    -o-transition:box-shadow 3s ease-in;
+    transition:box-shadow 3s ease-in;
+    transition:box-shadow 3s ease-in, -webkit-box-shadow 3s ease-in
 }
 .editor{
     height:calc(100% - 210px);
@@ -56,6 +69,14 @@ html,body{
 }
 .editor textarea::-webkit-scrollbar{
     display:none
+}
+.editor.danger textarea{
+    color:#f45653;
+    -webkit-transition:all 3s linear;
+    -o-transition:all 3s linear;
+    transition:all 3s linear;
+    -webkit-filter:blur(2px);
+    filter:blur(2px)
 }
 .editor:before,.editor:after{
     content:"";
