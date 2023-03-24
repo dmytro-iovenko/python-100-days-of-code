@@ -9,36 +9,47 @@ html{
 html,body{
     height:100%;
     margin:0px;
-    padding:0px
-}
-.content{
-    position:absolute;
-    height:100%;
-    width:100%;
-    color:#51565d;
-    font-weight:400;
+    padding:0px;
     -webkit-transition:-webkit-box-shadow .1s ease-in;
     transition:-webkit-box-shadow .1s ease-in;
     -o-transition:box-shadow .1s ease-in;
     transition:box-shadow .1s ease-in;
     transition:box-shadow .1s ease-in, -webkit-box-shadow .1s ease-in;
-    background-color:#fff
+    background-color:#fff;
 }
-.content.danger{
+h2{
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 1.333rem;
+    text-align: left;
+    margin: 15px;
+}
+body.danger{
     -webkit-box-shadow:inset 0px 0px 40px 2px #f45653;
     box-shadow:inset 0px 0px 40px 2px #f45653;
     -webkit-transition:-webkit-box-shadow 3s ease-in;
     transition:-webkit-box-shadow 3s ease-in;
     -o-transition:box-shadow 3s ease-in;
     transition:box-shadow 3s ease-in;
-    transition:box-shadow 3s ease-in, -webkit-box-shadow 3s ease-in
+    transition:box-shadow 3s ease-in, -webkit-box-shadow 3s ease-in;
+}
+.content{
+    width: 100%;
+    max-width: 600px;
+    margin: 0px auto;
+    position: relative;
+    height: calc(100% - 1px);
+    margin: 0px auto;
+    padding-top: 1px;
+    color:#51565d;
+    font-weight:400;
 }
 .editor{
     height:calc(100% - 210px);
     margin-top:80px;
     position:relative;
     line-height:1.65;
-    font-size:14pt
+    font-size:14pt;
 }
 .editor textarea{
     display:block;
@@ -57,18 +68,18 @@ html,body{
     resize:none;
     -webkit-transition:all .1s linear;
     -o-transition:all .1s linear;
-    transition:all .1s linear
+    transition:all .1s linear;
 }
 .editor textarea::-moz-selection{
     color:#fff;
-    background:red
+    background:red;
 }
 .editor textarea::selection{
     color:#fff;
-    background:red
+    background:red;
 }
 .editor textarea::-webkit-scrollbar{
-    display:none
+    display:none;
 }
 .editor.danger textarea{
     color:#f45653;
@@ -76,7 +87,7 @@ html,body{
     -o-transition:all 3s linear;
     transition:all 3s linear;
     -webkit-filter:blur(2px);
-    filter:blur(2px)
+    filter:blur(2px);
 }
 .editor:before,.editor:after{
     content:"";
@@ -93,7 +104,7 @@ html,body{
     background:-webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, 0)));
     background:-webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
     background:-o-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
-    background:linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%)
+    background:linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
 }
 .wordcount{
     position:fixed;
@@ -101,5 +112,5 @@ html,body{
     text-align:center;
     width:100%;
     left:0px;
-    opacity:.4
+    opacity:.4;
 }
