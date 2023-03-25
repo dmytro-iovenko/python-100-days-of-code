@@ -14,8 +14,14 @@ class Writing {
         return new Date().getTime() / 1000;
     }
 
+    win = () => {
+        this.stopWriting();
+        setTimeout(() => alert('You WIN!'), 100);
+    }
+
     fail = () => {
-      this.stopWriting();
+        this.stopWriting();
+        setTimeout(() => alert('You lose! You have written ' + this.words + '.'), 100);
     }
 
     tick = () => {
@@ -28,7 +34,7 @@ class Writing {
             if (!body.classList.contains('danger')) body.classList.add('danger');
         } else {
             document.getElementById('editor').classList.remove('danger');
-            document.getElementById('content').classList.remove('danger');
+            document.body.classList.remove('danger');
         }
         if (this.timeSinceStroke >= this.kill) return this.fail();
         this.timeSinceStroke += 0.1;
@@ -43,16 +49,17 @@ class Writing {
         this.words = words + (words === 1 ? ' word' : ' words');
         document.getElementById('wordcount').innerHTML = this.words;
         console.log(this.timeSinceStroke, this.kill)
+        if (words >= 100) return this.win();
         if (!this.timerID) this.timerID = setInterval(() => this.tick(), 100);
     }
 
     stopWriting = () => {
         clearInterval(this.timerID);
         this.timerID = null;
+        this.run = false;
         document.getElementById('text').value = '';
         document.body.classList.remove('danger');
         document.getElementById('editor').classList.remove('danger');
-        setTimeout(() => alert('You lose! You have written ' + this.words + '.'), 100);
         document.getElementById('wordcount').innerHTML = '0 words';
     }
 
@@ -60,7 +67,7 @@ class Writing {
 
 const startApp = () => {
     const app = new Writing();
-    document.getElementById('text').addEventListener('keyup', app.startWriting);
+    document.getElementById('text').addEventListener('keydown', app.startWriting);
 }
 
 window.addEventListener('load', startApp);
