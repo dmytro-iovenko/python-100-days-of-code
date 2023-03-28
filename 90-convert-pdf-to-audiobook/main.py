@@ -22,7 +22,7 @@ def render_page(num, total):
 
     text.delete(1.0,END)
     text.insert(1.0,content)
-    label.config(text=f"{num+1}/{pdf_pages}")
+    label.config(text=f"Page: {num+1} of {pdf_pages}")
 
     if(num == 0 and num == total - 1):
         btn_prev_page.config(state="disabled")
@@ -78,29 +78,17 @@ btn_prev_page = Button(fm, text = " < Prev Page ", command = lambda: render_page
 btn_prev_page.pack(side=LEFT, fill=X, expand=NO)
 btn_next_page = Button(fm, text = " Next Page > ", command = lambda: render_page(current_page_num + 1, pdf_pages))
 btn_next_page.pack(side=LEFT, fill=X, expand=NO)
-label = Label(fm, text= f"{current_page_num+1}/{pdf_pages}", font= ('Helvetica', 12))
+
+label = Label(fm, text= f"Page: {current_page_num+1} of {pdf_pages}", anchor='w', font= ('Helvetica', 12))
 label.pack(side=LEFT, fill=X, expand=YES)
 
 btn_play = Button(fm, text = "    Play    ", command = play)
 btn_play.pack(side=LEFT, fill=X, expand=NO)
 btn_pause = Button(fm, text = "    Pause    ", command = pause)
 btn_pause.pack(side=LEFT, fill=X, expand=NO)
+btn_pause.config(state="disabled")
+
 fm.pack(pady=20, fill=BOTH, expand=YES)
-
-#btn_prev_page = Button(text = " < Prev Page", command = lambda: render_page(current_page_num - 1, pdf_pages))
-#btn_prev_page.place(x = margin, y = margin, width = 100, height = 40)
-#btn_next_page = Button(text = " Next Page > ", command = lambda: render_page(current_page_num + 1, pdf_pages))
-#btn_next_page.place(x = margin + 100, y = margin, width = 100, height = 40)
-
-#label= Label(window, text= f"{current_page_num+1}/{pdf_pages}", font= ('Helvetica', 12))
-#label.pack(pady=20)
-
-#btn_play = Button(text = "Play", command = play)
-#btn_play.place(x = 750 - margin - 200, y = margin, width = 100, height = 40)
-#btn_pause = Button(text = "Pause", command = pause)
-#btn_pause.place(x = 750 - margin - 100, y = margin, width = 100, height = 40)
-#btn_pause.config(state="disabled")
-
 
 v=Scrollbar(window, orient='vertical')
 v.pack(side=RIGHT, fill='y')
