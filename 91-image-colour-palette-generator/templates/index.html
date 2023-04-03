@@ -3,10 +3,17 @@
 {% block title %}Coffee and Wifi{% endblock %}
 
 {% block content %}
-<div class="container" style="background-color:rgb({{ color }})">
-  <h1>{{ title }}</h1>
-</div>
-<div class="container">
-  <img src="data:image/jpeg;base64,{{ img_data }}">
-</div>
+    <div class="container">
+      <form method="POST" enctype="multipart/form-data"><input type="file" name="image"><button type="submit">Upload</button></form><br>
+    </div>
+{% if img_data %}
+    <div class="container" style="background-color:rgb({{ color }})">
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="container">
+      <img src="data:image/jpeg;base64,{{ img_data }}">
+    </div>
+{% else %}
+    {{ super() }}
+{% endif %}
 {% endblock %}
