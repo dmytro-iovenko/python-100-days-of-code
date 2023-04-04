@@ -1,18 +1,24 @@
 {% extends 'bootstrap/base.html' %}
 
-{% block title %}Coffee and Wifi{% endblock %}
+{% block title %}Image Color Palette Generator{% endblock %}
 
 {% block content %}
     <div class="container">
+      <h2>Upload an image to analyze</h2>
       <form method="POST" enctype="multipart/form-data"><input type="file" name="image"><button type="submit">Upload</button></form><br>
     </div>
-{% if img_data %}
-    <div class="container" style="background-color:rgb({{ color }})">
-      <h1>{{ title }}</h1>
+{% if img_data and color_data %}
+    <div class="container">
+      <h3>Dominant colors of the image</h3>
+      <img src="data:image/jpeg;base64,{{ color_data }}">
     </div>
     <div class="container">
-      <img src="data:image/jpeg;base64,{{ img_data }}">
+      <h3>The image</h3>
+      <img src="data:image/jpeg;base64,{{ img_data }}" style="max-width:600px;">
     </div>
+
+
+
 {% else %}
     {{ super() }}
 {% endif %}
