@@ -12,6 +12,17 @@ def job_data(soup):
     result_1 = data_str.split("\n")
     return(result_1)
 
+def company_data(soup):
+    data_str = ""
+    result = ""
+    for item in soup.find_all("div", class_="sjcl"):
+        data_str = data_str + item.get_text()
+    result_1 = data_str.split("\n")
+    res = []
+    for i in range(1, len(result_1)):
+        if len(result_1[i]) > 1:
+            res.append(result_1[i])
+    return(res)
 
 job = "data+analyst"
 location = "United+States"
@@ -29,8 +40,13 @@ htmldata = getdata(url, header)
 soup = BeautifulSoup(htmldata, 'html.parser')
 
 job_res = job_data(soup)
+com_res = company_data(soup)
 
 temp = 0
 for i in range(1, len(job_res)):
+    j = temp
+    for j in range(temp, 2+temp):
+        print("Company Name and Address : " + com_res[j])
+    temp = j
     print("Job : " + job_res[i])
     print("-----------------------------")
