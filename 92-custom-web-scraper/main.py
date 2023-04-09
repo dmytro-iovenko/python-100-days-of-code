@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+from flask import Flask, render_template, request
+from flask_bootstrap import Bootstrap
 
 def getdata(url, header):
     r = requests.get(url, headers=header)
@@ -24,29 +26,42 @@ def company_data(soup):
             res.append(result_1[i])
     return(res)
 
-job = "data+analyst"
-location = "United+States"
-url = "https://in.indeed.com/jobs?q="+job+"&l="+location
+app = Flask(__name__)
+Bootstrap(app)
 
-header = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-    "Connection": "keep-alive",
-    "Accept-Language": "en-US,en;q=0.9,lt;q=0.8,et;q=0.7,de;q=0.6",
-}
 
-htmldata = getdata(url, header)
-soup = BeautifulSoup(htmldata, 'html.parser')
+@app.route("/", methods=['GET', 'POST'])
+def home():
 
-job_res = job_data(soup)
-com_res = company_data(soup)
+    job = "data+analyst"
+    location = "United+States"
+    url = "https://in.indeed.com/jobs?q="+job+"&l="+location
 
-temp = 0
-for i in range(1, len(job_res)):
-    j = temp
-    for j in range(temp, 2+temp):
-        print("Company Name and Address : " + com_res[j])
-    temp = j
-    print("Job : " + job_res[i])
-    print("-----------------------------")
+    header = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "Connection": "keep-alive",
+        "Accept-Language": "en-US,en;q=0.9,lt;q=0.8,et;q=0.7,de;q=0.6",
+    }
+
+    htmldata = getdata(url, header)
+    soup = BeautifulSoup(htmldata, 'html.parser')
+
+    job_res = job_data(soup)
+    com_res = company_data(soup)
+
+    temp = 0
+    for i in range(1, len(job_res)):
+        j = temp
+        for j in range(temp, 2+temp):
+            print("Company Name and Address : " + com_res[j])
+        temp = j
+        print("Job : " + job_res[i])
+        print("-----------------------------")
+
+    return render_template("index.html")
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
