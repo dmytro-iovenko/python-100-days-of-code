@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 def getdata(url, header):
     r = requests.get(url, headers=header)
@@ -26,7 +29,15 @@ def company_data(soup):
             res.append(result_1[i])
     return(res)
 
+
+class SearchForm(FlaskForm):
+    job = StringField("What", validators=[DataRequired()], render_kw={"placeholder": "Job title, keywords, or company"})
+    location = StringField("Where", validators=[DataRequired()], render_kw={"placeholder": "City, state, zip code, or 'remote'"})
+    submit = SubmitField("Search Job")
+
+
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "f7dd50b017d598db4b7c84c2d80c7441"
 Bootstrap(app)
 
 
@@ -60,7 +71,9 @@ def home():
         print("Job : " + job_res[i])
         print("-----------------------------")
 
-    return render_template("index.html")
+    form = SearchForm()
+
+    return render_template("index.html", form=form)
 
 
 if __name__ == "__main__":

@@ -4,6 +4,14 @@
 
 {% block content %}
     <div class="container">
-        Custom Web Scraper
+        <h2>Custom Job Search</h2>
+        <form action="" method="post" class="form" role="form" novalidate="">
+            {{ form.csrf_token }}
+            <div class="add-items d-flex">
+                {{ form.job(class_="form-control") }} 
+                {{ form.location(class_="form-control") }} 
+                {{ form.submit(class_="add btn btn-primary font-weight-bold todo-list-add-btn") }}
+            </div>
+        </form>
     </div>
 {% endblock %}
