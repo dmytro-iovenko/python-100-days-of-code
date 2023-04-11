@@ -13,5 +13,16 @@
                 {{ form.submit(class_="add btn btn-primary font-weight-bold todo-list-add-btn") }}
             </div>
         </form>
+        <div class="list-wrapper">
+            <ul class="d-flex">
+            {% for row in results %}
+                <li>
+                    <p>Company Name    : {{ row[0] }}</p>
+                    <p>Company Address : {{ row[1] }}</p>
+                    <p>Job : {{ row[2] }}</p>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock %}
