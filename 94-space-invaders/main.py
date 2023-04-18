@@ -1,6 +1,7 @@
 from turtle import Screen, Turtle
 from player import Player
 from bullet import Bullet
+from enemies import Enemies
 import time
 
 #Set up screen                                         
@@ -12,6 +13,9 @@ screen.tracer(0)
 
 #Create the player
 player = Player()
+
+#Create enemies
+enemies = Enemies()
 
 #Create the bullet
 bullet = Bullet()
@@ -34,7 +38,17 @@ while game_is_on:
         bullet.move()
 
     #Check to see if the bullet has gone to the top
-    if bullet.ycor() > 275:
+    if bullet.ycor() > 270:
         bullet.reset()
+
+    for enemy in enemies.enemies:
+        #Move the enemy
+        enemy.move()
+        #Move the enemy back and down
+        if enemy.xcor() > 370 or enemy.xcor() < -380:
+            #Move all the enemies down and change direction
+            for e in enemies.enemies:
+                e.move_down()
+                e.move_speed *= -1
 
 screen.exitonclick()
