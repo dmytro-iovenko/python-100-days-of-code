@@ -3,6 +3,7 @@ from player import Player
 from bullet import Bullet
 from enemies import Enemies
 import time
+import math
 
 #Set up screen                                         
 screen = Screen()
@@ -25,6 +26,10 @@ screen.listen()
 screen.onkeypress(key='Left', fun=player.move_left)
 screen.onkeypress(key='Right', fun=player.move_right)
 screen.onkey(key='space', fun=lambda player=player: bullet.fire(player))
+
+def isCollision(t1,t2):
+    distance = math.sqrt(math.pow(t1.xcor()-t2.xcor(),2)+math.pow(t1.ycor()-t2.ycor(),2))
+    return(distance < 15)
  
 game_is_on = True
 
@@ -50,5 +55,11 @@ while game_is_on:
             for e in enemies.enemies:
                 e.move_down()
                 e.move_speed *= -1
+        #Check for collision between bullet and enemy
+        if isCollision(bullet, enemy):
+            enemies.destroy_enemy(enemy)
+            bullet.reset()
+
+
 
 screen.exitonclick()

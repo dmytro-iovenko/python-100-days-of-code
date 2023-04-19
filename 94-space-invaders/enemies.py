@@ -36,3 +36,7 @@ class Enemies:
             enemy = Enemy(x, y)
             self.enemies.append(enemy)
  
+    def destroy_enemy(self, enemy):
+        enemy.clear()
+        enemy.goto(3000, 3000)
+        self.enemies.remove(enemy)
