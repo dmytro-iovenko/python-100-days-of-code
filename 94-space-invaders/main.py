@@ -2,6 +2,7 @@ from turtle import Screen, Turtle
 from player import Player
 from bullet import Bullet
 from enemies import Enemies
+from scoreboard import Scoreboard
 import time
 import math
 
@@ -12,12 +13,12 @@ screen.setup(width=800, height=600)
 screen.title("Space Invaders")
 screen.tracer(0)
 
+#Create the score board
+score = Scoreboard(1)
 #Create the player
 player = Player()
-
 #Create enemies
-enemies = Enemies()
-
+enemies = Enemies(1)
 #Create the bullet
 bullet = Bullet()
 
@@ -57,9 +58,16 @@ while game_is_on:
                 e.move_speed *= -1
         #Check for collision between bullet and enemy
         if isCollision(bullet, enemy):
+            score.increase_score()
             enemies.destroy_enemy(enemy)
             bullet.reset()
+            break
 
+    # detect level-up
+    if len(enemies.enemies) == 0:
+        screen.update()
+        score.next_level()
+        enemies = Enemies(score.level)
 
 
 screen.exitonclick()
