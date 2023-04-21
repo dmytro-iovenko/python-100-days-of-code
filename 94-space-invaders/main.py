@@ -62,6 +62,12 @@ while game_is_on:
             enemies.destroy_enemy(enemy)
             bullet.reset()
             break
+        if enemy.ycor() < -280:
+            bullet.reset()
+            score.reset()
+            game_is_on = False
+            print("Game Over")
+            break
 
     # detect level-up
     if len(enemies.enemies) == 0:
