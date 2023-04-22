@@ -27,4 +27,5 @@ class Bullet(Turtle):
 
     def reset(self):
         self.hideturtle()
+        self.goto(3000, 3000)
         self.state = "ready"

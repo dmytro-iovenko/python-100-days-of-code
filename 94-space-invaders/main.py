@@ -13,6 +13,11 @@ screen.setup(width=800, height=600)
 screen.title("Space Invaders")
 screen.tracer(0)
 
+
+#Register the shapes
+screen.register_shape("enemy.gif") #this is pic.of invader  
+screen.register_shape("player.gif")  # this is pic.of player 
+
 #Create the score board
 score = Scoreboard(1)
 #Create the player

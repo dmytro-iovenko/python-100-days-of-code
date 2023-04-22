@@ -6,9 +6,12 @@ class Enemy(Turtle):
     def __init__(self, x_cor, y_cor, level):
         super().__init__()
         self.penup()
-        self.shape("square")
-        self.color("red")
-        self.shapesize(stretch_wid=1, stretch_len=2)
+        self.shape("enemy.gif")
+        #self.resizemode("user")
+        #self.shapesize(0.5, 0.5, 0)
+        #self.shape("square")
+        #self.color("red")
+        #self.shapesize(stretch_wid=1, stretch_len=2)
         self.goto(x=x_cor, y=y_cor)
         self.move_speed = level + 1
         self.speed(0)
