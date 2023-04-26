@@ -1,7 +1,10 @@
 from flask import Flask, render_template
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
+Bootstrap(app)
 
+ITBOOK_DB_SEARCH_URL = "https://api.itbook.store/1.0/"
 
 ##RENDER HOME PAGE
 @app.route('/')

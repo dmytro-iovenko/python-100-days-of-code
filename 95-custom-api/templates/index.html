@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Home Page</h1>
-</body>
-</html>
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}My Top 10 Movies{% endblock %}
+
+{% block content %}
+
+<header>
+    <div className='container'>
+        <Link className='navbar-brand' to='/index.html'>My IT Library</Link>
+    </div>
+</header>
+
+<div class="container">
+  <h1 class="heading">My Top 10 IT Books</h1>
+  <p class="description">These are my favourite IT books.</p>
+  
+</div>
+
+<footer>
+    <p>Copyright © 2003</p>
+</footer>
+{% endblock %}
