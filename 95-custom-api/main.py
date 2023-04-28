@@ -29,7 +29,7 @@ def add_book():
         book_title = form.title.data
         response = requests.get(f"{ITBOOK_DB_SEARCH_URL}/query={book_title}")
         data = response.json()["books"]
-        return render_template("index.html", options=data)
+        return render_template("select.html", options=data)
     return render_template("add.html", form=form)
 
 
