@@ -16,7 +16,7 @@
   
   {% for book in options: %}
   <p>
-    <a href="{{ url_for('find_book', id=book.isbn13) }} ">{{ movie.title }}</a>
+    <a href="{{ url_for('find_book', id=book.isbn13) }} ">{{ book.title }}</a>
   </p>
   {% endfor %}
 
