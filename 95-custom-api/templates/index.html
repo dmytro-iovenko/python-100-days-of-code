@@ -27,8 +27,10 @@
             <label>{{book.rating}}</label>
           <i class="fas fa-star star"></i>
         </div>
+        <p class="review">"{{book.review}}"</p>
         <p class="overview">{{book.description}}</p>
 
+        <a href="{{ url_for('rate_book', id=book.isbn13) }}" class="button">Update</a>
       </div>
     </div>
   </div>

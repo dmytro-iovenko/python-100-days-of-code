@@ -21,15 +21,22 @@ ITBOOK_DB_INFO_URL = "https://api.itbook.store/1.0/books"
 
 ##CREATE TABLE
 class Book(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    isbn13 = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), unique=True, nullable=False)
     authors = db.Column(db.String(250), unique=True, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(500), nullable=False)
+    review = db.Column(db.String(250), nullable=True)
     img_url = db.Column(db.String(250), nullable=False)
 db.create_all()
 
+
+class RateBookForm(FlaskForm):
+    rating = StringField("Your Rating Out of 10 e.g. 7.5")
+    review = StringField("Your Review")
+    submit = SubmitField("Done")
+    
 
 class FindBookForm(FlaskForm):
     title = StringField("Book Title", validators=[DataRequired()])
@@ -44,6 +51,19 @@ def home():
         all_books[i].ranking = len(all_books) - i
     db.session.commit()
     return render_template("index.html", books=all_books)
+
+
+@app.route("/edit", methods=["GET", "POST"])
+def rate_book():
+    form = RateBookForm()
+    book_id = request.args.get("id")
+    book = Book.query.get(book_id)
+    if form.validate_on_submit():
+        book.rating = float(form.rating.data)
+        book.review = form.review.data
+        db.session.commit()
+        return redirect(url_for("home"))
+    return render_template("edit.html", book=book, form=form)
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -65,6 +85,7 @@ def find_book():
         response = requests.get(book_api_url)
         data = response.json()
         new_book = Book(
+            isbn13=data["isbn13"],
             title=data["title"],
             authors=data["authors"],
             year=data["year"],
