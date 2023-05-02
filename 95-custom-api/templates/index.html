@@ -30,6 +30,7 @@
         <p class="review">"{{book.review}}"</p>
         <p class="overview">{{book.description}}</p>
 
+        <a href="{{ url_for('delete_book', id=book.isbn13) }}" class="button delete-button">Delete</a>
         <a href="{{ url_for('rate_book', id=book.isbn13) }}" class="button">Update</a>
       </div>
     </div>
