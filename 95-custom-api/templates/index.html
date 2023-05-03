@@ -12,32 +12,39 @@
 {% block title %}My Top 10 Movies{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h1 class="heading">My Top 10 IT Books</h1>
-  <p class="description">These are my favourite IT books.</p>
-  
-  {% for book in books %}
-  <div class="card" >
-    <div class="front" style="background-image: url('{{book.img_url}}');">
-    </div>
-    <div class="back">
-      <div>
-        <div class="title">{{book.title}} <span class="release_date">{{book.authors}} ({{book.year}})</span></div>
-        <div class="rating">
-            <label>{{book.rating}}</label>
-          <i class="fas fa-star star"></i>
+<div class='App'>
+    <header>
+        <div class='container'>
+            <Link class='navbar-brand' to='/index.html'>IT Books</Link>
         </div>
-        <p class="review">"{{book.review}}"</p>
-        <p class="overview">{{book.description}}</p>
+    </header>
 
-        <a href="{{ url_for('delete_book', id=book.isbn13) }}" class="button delete-button">Delete</a>
-        <a href="{{ url_for('rate_book', id=book.isbn13) }}" class="button">Update</a>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
-</div>
-<div class="container text-center add">
-  <a href="{{ url_for('add_book') }}" class="button">Add Book</a>
+    <section class='section text-muted'>
+        <div class='container'>
+            <h1 class='new-books'>New released books</h1>
+            <div class='row grid-style'>
+                {% for book in books %}
+                <div class='pt-4 col-xl-5th col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+                    <div class='blog-box'>
+                        <div class='post-media'>
+                            <a href="{{ url_for('show_book', id=book.isbn13) }}">
+                                <img src='{{book.image}}' class='img-fluid' alt={{book.title}}/>
+                                <div class='hovereffect'></div>
+                            </a>
+                        </div>
+                        <div class='blog-meta'>
+                            <h4><a href="{{ url_for('show_book', id=book.isbn13) }}">{{book.title}}</a></h4>
+                            <p>{{book.subtitle}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Copyright © {year}</p>
+    </footer>
 </div>
 {% endblock %}

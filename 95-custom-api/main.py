@@ -16,6 +16,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.app_context().push()
 
+ITBOOK_DB_NEWBOOKS_URL = "https://api.itbook.store/1.0/new"
 ITBOOK_DB_SEARCH_URL = "https://api.itbook.store/1.0/search"
 ITBOOK_DB_INFO_URL = "https://api.itbook.store/1.0/books"
 
@@ -46,12 +47,14 @@ class FindBookForm(FlaskForm):
 ##RENDER HOME PAGE
 @app.route('/')
 def home():
-    all_books = Book.query.order_by(Book.rating).all()
-    for i in range(len(all_books)):
-        all_books[i].ranking = len(all_books) - i
-    db.session.commit()
-    return render_template("index.html", books=all_books)
+    response = requests.get(ITBOOK_DB_NEWBOOKS_URL)
+    new_books = response.json()["books"]
+    return render_template("index.html", books=new_books)
 
+@app.route('/book')
+def show_book():
+    book_id = request.args.get("id")
+    return ""
 
 @app.route("/edit", methods=["GET", "POST"])
 def rate_book():
