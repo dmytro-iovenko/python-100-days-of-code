@@ -12,8 +12,20 @@
 {% block title %}Add Book{% endblock %}
 
 {% block content %}
-<div class="content">
-    <h1 class="heading">Add a Book</h1>
-    {{ wtf.quick_form(form, novalidate=True) }}
+<div class='App'>
+    <header>
+        <div class='container'>
+            <Link class='navbar-brand' to='/index.html'>IT Books</Link>
+        </div>
+    </header>
+
+    <div class="content">
+        <h1 class="heading">Add a Book</h1>
+        {{ wtf.quick_form(form, novalidate=True) }}
+    </div>
+
+    <footer>
+        <p>Copyright © {year}</p>
+    </footer>
 </div>
 {% endblock %}

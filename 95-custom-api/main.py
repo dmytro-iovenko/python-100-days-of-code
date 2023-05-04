@@ -51,10 +51,12 @@ def home():
     new_books = response.json()["books"]
     return render_template("index.html", books=new_books)
 
+
 @app.route('/book')
 def show_book():
     book_id = request.args.get("id")
     return ""
+
 
 @app.route("/edit", methods=["GET", "POST"])
 def rate_book():
