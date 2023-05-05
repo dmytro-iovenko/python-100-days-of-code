@@ -1,0 +1,79 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}My Top 10 Movies{% endblock %}
+
+{% block content %}
+<div class='App'>
+    <header>
+        <div class='container'>
+            <Link class='navbar-brand' to='/index.html'>IT Books</Link>
+        </div>
+    </header>
+
+    <section class='section text-muted'>
+        <div class='container'>
+            <div class="card mb-3 book">
+                <div class="row g-0">
+                    <div class="col-md-3">
+                        <img src={{book.image}} />
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <h2 class="card-title">{{book.title}}</h2>
+                            <h4 class="card-subtitle">{{book.subtitle}}</h4>
+                            <h5 class="card-text">by {{book.authors}}</h5>
+                            <p class="card-data text-muted">Released: {{book.year}}</p>
+                            <p class="card-data text-muted">Publisher(s): {{book.publisher}}</p>
+                            <p class="card-data text-muted">Pages: {{book.pages}}</p>
+                            <p class="card-data text-muted">ISBN: {{book.isbn13}}</p>
+                            <p class="card-desc">{{book.desc}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="custombox clearfix">
+                <h4 class="small-title">Leave a Review</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        {{ wtf.quick_form(form, novalidate=True, button_map={'submit': 'primary'}) }}
+                    </div>
+                </div>
+            </div>
+            {% if reviews %}
+            <div class='custombox clearfix'>
+                <h4 class='small-title'>{{reviews|length}} Reviews</h4>
+                <div class='row'>
+                    <div class='col-lg-12'>
+                        <div class='comments-list'>
+                            {% for review in reviews %}
+                            <div class='media'>
+                                <div class='media-body'>
+                                    <h4 class='media-heading username'>{{review.name}} <small>Published {{review.date.strftime('%Y-%m-%d %H:%M')}}</small></h4>
+                                    <p>rate: {{review.rate}}</p>
+                                    <p>{{review.review}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer>
+        <p>Copyright © {year}</p>
+    </footer>
+</div>
+{% endblock %}

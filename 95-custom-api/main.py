@@ -2,9 +2,10 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import HiddenField, StringField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired
 import requests
+import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'b6f9aff3cbefb58d0cd90906864ed4a3'
@@ -21,22 +22,23 @@ ITBOOK_DB_SEARCH_URL = "https://api.itbook.store/1.0/search"
 ITBOOK_DB_INFO_URL = "https://api.itbook.store/1.0/books"
 
 ##CREATE TABLE
-class Book(db.Model):
-    isbn13 = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(250), unique=True, nullable=False)
-    authors = db.Column(db.String(250), unique=True, nullable=False)
-    year = db.Column(db.Integer, nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(500), nullable=False)
-    review = db.Column(db.String(250), nullable=True)
-    img_url = db.Column(db.String(250), nullable=False)
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    isbn13 = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(250), nullable=False)
+    date = db.Column(db.DateTime, default=datetime.datetime.now())
+    review = db.Column(db.String(2000), nullable=True)
+    rate = db.Column(db.Integer, nullable=False)
+
 db.create_all()
 
 
 class RateBookForm(FlaskForm):
-    rating = StringField("Your Rating Out of 10 e.g. 7.5")
-    review = StringField("Your Review")
-    submit = SubmitField("Done")
+    name = StringField("", validators=[DataRequired()], render_kw={"placeholder": "Your name"})
+    review = TextAreaField("", validators=[DataRequired()], render_kw={"placeholder": "Enter your review...", "maxLength": "2000", "spellcheck": "false"})
+    rate = StringField("", validators=[DataRequired()], render_kw={"placeholder": "Rate from 1 to 5"})
+    id = HiddenField()
+    submit = SubmitField("Submit Review")
     
 
 class FindBookForm(FlaskForm):
@@ -52,10 +54,27 @@ def home():
     return render_template("index.html", books=new_books)
 
 
-@app.route('/book')
+@app.route('/book', methods=["GET", "POST"])
 def show_book():
     book_id = request.args.get("id")
-    return ""
+    form = RateBookForm(id=book_id)
+    if form.validate_on_submit():
+        print(book_id)
+        print(form)
+        review = Review(
+            isbn13 = book_id,
+            name = form.name.data,
+            date = datetime.datetime.now(),
+            review = form.review.data,
+            rate = form.rate.data
+        )
+        db.session.add(review)
+        db.session.commit()
+        form = RateBookForm(formdata=None, id=book_id)
+    response = requests.get(f"{ITBOOK_DB_INFO_URL}/{book_id}")
+    book = response.json()
+    reviews = Review.query.filter(Review.isbn13 == book_id).all()
+    return render_template("book.html", book=book, form=form, reviews=reviews)
 
 
 @app.route("/edit", methods=["GET", "POST"])
