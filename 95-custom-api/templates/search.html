@@ -5,12 +5,10 @@
   {{ super() }}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 {% endblock %}
 
-{% block title %}IT Books{% endblock %}
+{% block title %}Select Book{% endblock %}
 
 {% block content %}
 <div class='App'>
@@ -27,10 +25,11 @@
     </section>
 
     <section class='section text-muted'>
+        {% if books %}
         <div class='container'>
-            <h1 class='new-books'>New released books</h1>
+            <h5>{{query}}</h5>
             <div class='row grid-style'>
-                {% for book in books %}
+                {% for book in books: %}
                 <div class='pt-4 col-xl-5th col-lg-3 col-md-4 col-sm-6 col-xs-12'>
                     <div class='blog-box'>
                         <div class='post-media'>
@@ -48,6 +47,13 @@
                 {% endfor %}
             </div>
         </div>
+        {% else %}
+        <div class='container text-center'>
+            <h2>Nothing turned up</h2>
+            <h6>You can try again</h6>
+        </div>
+        }
+        {% endif %}
     </section>
 
     <footer>

@@ -42,25 +42,41 @@ class RateBookForm(FlaskForm):
     
 
 class FindBookForm(FlaskForm):
-    title = StringField("Book Title", validators=[DataRequired()])
-    submit = SubmitField("Add Book")
+    title = StringField("", validators=[DataRequired()], render_kw={"placeholder": "Search..."})
+    submit = SubmitField("Search")
 
 
 ##RENDER HOME PAGE
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def home():
+    form = FindBookForm()
+    if form.validate_on_submit():
+        return redirect(url_for("search", query=form.title.data))
     response = requests.get(ITBOOK_DB_NEWBOOKS_URL)
     new_books = response.json()["books"]
-    return render_template("index.html", books=new_books)
+    return render_template("index.html", books=new_books, form=form)
 
 
-@app.route('/book', methods=["GET", "POST"])
-def show_book():
-    book_id = request.args.get("id")
+@app.route('/book/')
+@app.route('/search/')
+def wrong_url():
+    return redirect(url_for("home"))
+
+@app.route('/search/<query>', methods=["GET", "POST"])
+def search(query):
+    form = FindBookForm()
+    if form.validate_on_submit():
+        return redirect(url_for("search", query=form.title.data))
+    response = requests.get(f"{ITBOOK_DB_SEARCH_URL}/query={query}")
+    books = response.json()["books"]
+    return render_template("search.html", books=books, form=form, query=query)
+
+
+@app.route('/book/<int:book_id>', methods=["GET", "POST"])
+def show_book(book_id):
+    #book_id = request.args.get("id")
     form = RateBookForm(id=book_id)
     if form.validate_on_submit():
-        print(book_id)
-        print(form)
         review = Review(
             isbn13 = book_id,
             name = form.name.data,
@@ -97,38 +113,6 @@ def delete_book():
     db.session.delete(book)
     db.session.commit()
     return redirect(url_for("home"))
-
-
-@app.route("/add", methods=["GET", "POST"])
-def add_book():
-    form = FindBookForm()
-    if form.validate_on_submit():
-        book_title = form.title.data
-        response = requests.get(f"{ITBOOK_DB_SEARCH_URL}/query={book_title}")
-        data = response.json()["books"]
-        return render_template("select.html", options=data)
-    return render_template("add.html", form=form)
-
-
-@app.route("/find")
-def find_book():
-    book_api_id = request.args.get("id")
-    if book_api_id:
-        book_api_url = f"{ITBOOK_DB_INFO_URL}/{book_api_id}"
-        response = requests.get(book_api_url)
-        data = response.json()
-        new_book = Book(
-            isbn13=data["isbn13"],
-            title=data["title"],
-            authors=data["authors"],
-            year=data["year"],
-            rating=data["rating"],
-            img_url=data["image"],
-            description=data["desc"]
-        )
-        db.session.add(new_book)
-        db.session.commit()
-        return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
