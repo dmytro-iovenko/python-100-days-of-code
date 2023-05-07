@@ -26,40 +26,37 @@
         {% if reviews %}
         <div class='container'>
             <h5>Reviews: {{reviews|length}}</h5>
-            <div class="accordion accordion-flush">
+            <div class="accordion" id="reviewsList">
                 {% for review in reviews %}
-                <div class="row accordion-item">
-                    <div class="col-lg-10 accordion-header">
-                        <button type="button" aria-expanded="false" class="accordion-button collapsed">
-                            <div class="col-lg-1">
+                <div class="btn-group d-flex" role="group" id="heading-{{review.id}}">
+                    <button class="btn btn-light btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-{{review.id}}">
+                        <div class="row">
+                            <div class="col-1">
                                 {{review.id}}
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-3">
                                 {{review.isbn13}}
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-4">
                                 {{review.name}}
                             </div>
-                            <div class="col-lg-3">
-                                {{review.date}}
+                            <div class="col-4">
+                                {{review.date.strftime('%Y-%m-%d %H:%M')}}
                             </div>
-                        </button>
-                    </div>
-                    <div class="col-lg-1">
-                        <button type="button" class="accordion-btn">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
-                    <div class="col-lg-1">
-                        <button type="button" class="accordion-btn">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                    <div class="accordion-collapse collapse" style="">
-                        <div class="col-lg-10 accordion-review accordion-body">
-                            {{review.review}}
                         </div>
-                    </div>
+                    </button>
+                    <button type="button" class="btn btn-light">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-light">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                
+                <div id="collapse-{{review.id}}" class="collapse" data-parent="#reviewsList">
+                  <div class="card-body">
+                      {{review.review}}
+                  </div>
                 </div>
                 {% endfor %}
             </div>
