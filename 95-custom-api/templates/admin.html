@@ -1,0 +1,74 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}IT Books{% endblock %}
+
+{% block content %}
+<div class='App'>
+    <header>
+        <nav class='navbar'>
+            <div class='container'>
+                <a class='navbar-brand' href="{{ url_for('home') }}">IT Books</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class='section text-muted'>
+        {% if reviews %}
+        <div class='container'>
+            <h5>Reviews: {{reviews|length}}</h5>
+            <div class="accordion accordion-flush">
+                {% for review in reviews %}
+                <div class="row accordion-item">
+                    <div class="col-lg-10 accordion-header">
+                        <button type="button" aria-expanded="false" class="accordion-button collapsed">
+                            <div class="col-lg-1">
+                                {{review.id}}
+                            </div>
+                            <div class="col-lg-3">
+                                {{review.isbn13}}
+                            </div>
+                            <div class="col-lg-3">
+                                {{review.name}}
+                            </div>
+                            <div class="col-lg-3">
+                                {{review.date}}
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-lg-1">
+                        <button type="button" class="accordion-btn">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-1">
+                        <button type="button" class="accordion-btn">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    <div class="accordion-collapse collapse" style="">
+                        <div class="col-lg-10 accordion-review accordion-body">
+                            {{review.review}}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <footer>
+        <p>Copyright © {year}</p>
+    </footer>
+</div>
+{% endblock %}

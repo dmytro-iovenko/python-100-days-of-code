@@ -57,13 +57,11 @@ def home():
     return render_template("index.html", books=new_books, form=form)
 
 
-@app.route('/book/')
 @app.route('/search/')
-def wrong_url():
-    return redirect(url_for("home"))
-
 @app.route('/search/<query>', methods=["GET", "POST"])
-def search(query):
+def search(query=None):
+    if query is None:
+        return redirect(url_for("home"))
     form = FindBookForm()
     if form.validate_on_submit():
         return redirect(url_for("search", query=form.title.data))
@@ -72,9 +70,11 @@ def search(query):
     return render_template("search.html", books=books, form=form, query=query)
 
 
+@app.route('/book/')
 @app.route('/book/<int:book_id>', methods=["GET", "POST"])
-def show_book(book_id):
-    #book_id = request.args.get("id")
+def show_book(book_id=None):
+    if book_id is None:
+        return redirect(url_for("home"))
     form = RateBookForm(id=book_id)
     if form.validate_on_submit():
         review = Review(
@@ -91,6 +91,12 @@ def show_book(book_id):
     book = response.json()
     reviews = Review.query.filter(Review.isbn13 == book_id).all()
     return render_template("book.html", book=book, form=form, reviews=reviews)
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    reviews = Review.query.all()
+    return render_template("admin.html", reviews=reviews)
 
 
 @app.route("/edit", methods=["GET", "POST"])

@@ -15,9 +15,18 @@
 {% block content %}
 <div class='App'>
     <header>
-        <div class='container'>
-            <Link class='navbar-brand' to='/index.html'>IT Books</Link>
-        </div>
+        <nav class='navbar'>
+            <div class='container'>
+                <a class='navbar-brand' href="{{ url_for('home') }}">IT Books</a>
+                <div class='navbar-nav'>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link me-5" href="{{ url_for('admin') }}">Admin Panel</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <section class='section text-muted'>

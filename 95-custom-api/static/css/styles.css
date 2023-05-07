@@ -20,13 +20,11 @@ code {
 
 header {
     background-color: #ffd103;
-    padding: 16px 32px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
   
 header a {
     color: #015eb5;
-    /* font-family: "McLaren", cursive; */
     font-weight: bold;
 }
 
@@ -179,6 +177,7 @@ h1.new-books {
 .custombox {
     position: relative;
     padding: 3rem 2rem;
+    margin-bottom: 3rem;
     border: 1px dashed #015eb5;
 }
 
@@ -229,10 +228,81 @@ h1.new-books {
     font-weight: 500;
 }
 
+/******* admin section ***********/
+
+.accordion-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-size: 1.25rem;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    /* transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,border-radius .15s ease; */
+}
+
+.accordion-review {
+    white-space: pre-wrap;
+
+}
+
+/* https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-bottom: 1.4rem;
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    font-size: 2rem;
+    color: #ffd103;
+    cursor: pointer
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
+}
+/* NoMatch*/
+.not-found {
+    text-align: center;
+}
+.not-found h2 {
+    font-size: 7rem;
+    margin-top: 15vh;
+}
+.not-found h3 {
+    font-size: 2rem;
+}
 
 @media (min-width: 1200px) {
     .col-xl-5th {
-        flex: 0 0 auto;
-        width: 20%;
+    flex: 0 0 auto;
+    width: 20%;
     }
 }
