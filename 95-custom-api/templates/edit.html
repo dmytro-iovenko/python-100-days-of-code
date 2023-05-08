@@ -8,12 +8,31 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 {% endblock %}
 
-{% block title %}Edit Books{% endblock %}
+{% block title %}Edit Review# {{review.id}}{% endblock %}
 
 {% block content %}
-<div class="content">
-  <h1 class="heading">Book Title</h1>
-    <p class="description">Edit Book Rating</p>
-    {{ wtf.quick_form(form, novalidate=True) }}
-  </div>
+<div class='App'>
+    <header>
+        <nav class='navbar'>
+            <div class='container'>
+                <a class='navbar-brand' href="{{ url_for('home') }}">IT Books</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class='section text-muted'>
+        <div class='container'>
+            <h5>Edit Review #{{review.id}}</h5>
+            <div className='row'>
+                <div className='col-lg-12'>
+                    {{ wtf.quick_form(form, novalidate=True) }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Copyright © {year}</p>
+    </footer>
+</div>
 {% endblock %}

@@ -99,17 +99,20 @@ def admin():
     return render_template("admin.html", reviews=reviews)
 
 
-@app.route("/edit", methods=["GET", "POST"])
-def rate_book():
-    form = RateBookForm()
-    book_id = request.args.get("id")
-    book = Book.query.get(book_id)
+@app.route("/admin/edit/<int:review_id>", methods=["GET", "POST"])
+def edit_review(review_id=None):
+    if review_id is None:
+        return redirect(url_for("admin"))
+    review = Review.query.get(review_id)
+    form = RateBookForm(name=review.name, review=review.review, rate=review.rate)
     if form.validate_on_submit():
-        book.rating = float(form.rating.data)
-        book.review = form.review.data
+        review.name = form.name.data
+        review.review = form.review.data
+        review.date = datetime.datetime.now()
+        review.rate = form.rate.data
         db.session.commit()
-        return redirect(url_for("home"))
-    return render_template("edit.html", book=book, form=form)
+        return redirect(url_for("admin"))
+    return render_template("edit.html", review=review, form=form)
 
 
 @app.route("/delete")
