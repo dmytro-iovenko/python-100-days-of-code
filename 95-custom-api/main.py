@@ -115,13 +115,14 @@ def edit_review(review_id=None):
     return render_template("edit.html", review=review, form=form)
 
 
-@app.route("/delete")
-def delete_book():
-    book_id = request.args.get("id")
-    book = Book.query.get(book_id)
-    db.session.delete(book)
+@app.route("/admin/delete/<int:review_id>")
+def delete_review(review_id=None):
+    if review_id is None:
+        return redirect(url_for("admin"))
+    review = Review.query.get(review_id)
+    db.session.delete(review)
     db.session.commit()
-    return redirect(url_for("home"))
+    return redirect(url_for("admin"))
 
 
 if __name__ == "__main__":
