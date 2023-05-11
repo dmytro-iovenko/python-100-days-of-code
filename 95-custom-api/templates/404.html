@@ -29,35 +29,10 @@
         </nav>
     </header>
 
-    <section class='section'>
-        <div class='container'>
-            {{ wtf.quick_form(form, novalidate=True, form_type='inline', button_map={'submit': 'outline-primary my-2 my-sm-0'}) }}
-        </div>
-    </section>
-
-    <section class='section text-muted'>
-        <div class='container'>
-            <h1 class='new-books'>New released books</h1>
-            <div class='row grid-style'>
-                {% for book in books %}
-                <div class='pt-4 col-xl-5th col-lg-3 col-md-4 col-sm-6 col-xs-12'>
-                    <div class='blog-box'>
-                        <div class='post-media'>
-                            <a href="{{ url_for('show_book', book_id=book.isbn13) }}">
-                                <img src='{{book.image}}' class='img-fluid' alt={{book.title}}/>
-                                <div class='hovereffect'></div>
-                            </a>
-                        </div>
-                        <div class='blog-meta'>
-                            <h4><a href="{{ url_for('show_book', book_id=book.isbn13) }}">{{book.title}}</a></h4>
-                            <p>{{book.subtitle}}</p>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
+    <div class='title-heading mt-5 pt-4 not-found'>
+        <h2>404</h2>
+        <h3>Page Not Found</h3>
+    </div>
 
     <footer>
         <p>Copyright © 2023</p>

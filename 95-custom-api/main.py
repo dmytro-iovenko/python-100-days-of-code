@@ -56,7 +56,6 @@ def home():
     new_books = response.json()["books"]
     return render_template("index.html", books=new_books, form=form)
 
-
 @app.route('/search/')
 @app.route('/search/<query>', methods=["GET", "POST"])
 def search(query=None):
@@ -123,6 +122,11 @@ def delete_review(review_id=None):
     db.session.delete(review)
     db.session.commit()
     return redirect(url_for("admin"))
+
+
+@app.errorhandler(404)
+def not_found(e):
+  return render_template("404.html")
 
 
 if __name__ == "__main__":
