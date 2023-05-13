@@ -46,6 +46,40 @@ class FindBookForm(FlaskForm):
     submit = SubmitField("Search")
 
 
+# generating pagination dynamically based on the current page to get a fixed number of page items (9 items)
+def paginate(page, count):
+    result = []
+    # if the count of pages is less or equal to 9, then return page items "as-is"
+    if count < 10:
+        for i in range(count):
+            result.append(f'{i + 1}')
+        return result
+    # if the current page is less than 6, then starting pagination from the first page
+    if page < 6:
+        start = 1
+    # otherwise show two pages BEFORE and after the current page
+    else:
+        start = min(page - 2, count - 6)
+    # if the current page is more than (count - 5), then ending pagination by the last page
+    if page > (count - 5):
+        end = count
+    # otherwise show two pages before and AFTER the current page
+    else:
+        end = max(page + 2, 7)
+    # generating the initial pagination array
+    for i in range(start, end + 1):
+        result.append(f'{i}')
+    # if the pagination array doesn't start from the first page, 
+    # then add  the first page and divider following it to the start of the array
+    if start > 1:
+        result = ['1', '...'] + result
+    # if the pagination array doesn't end with the last page, 
+    # then add the last page and divider preceding it to the end of the array
+    if end < count:
+        result = result + ['...', f'{count}']
+    return result
+
+
 ##RENDER HOME PAGE
 @app.route('/', methods=["GET", "POST"])
 def home():
@@ -57,16 +91,21 @@ def home():
     return render_template("index.html", books=new_books, form=form)
 
 @app.route('/search/')
-@app.route('/search/<query>', methods=["GET", "POST"])
-def search(query=None):
+@app.route('/search/<query>/', methods=["GET", "POST"])
+@app.route('/search/<query>/page-<int:page>', methods=["GET", "POST"])
+def search(query=None, page=None):
     if query is None:
         return redirect(url_for("home"))
     form = FindBookForm()
     if form.validate_on_submit():
         return redirect(url_for("search", query=form.title.data))
-    response = requests.get(f"{ITBOOK_DB_SEARCH_URL}/query={query}")
+    url = f"{ITBOOK_DB_SEARCH_URL}/{query}" if page is None else f"{ITBOOK_DB_SEARCH_URL}/{query}/{page}"
+    response = requests.get(url)
+    page = response.json()["page"]  
+    total = response.json()["total"]  
     books = response.json()["books"]
-    return render_template("search.html", books=books, form=form, query=query)
+    paginator = paginate(int(page), int(total) // 10 + 1)
+    return render_template("search.html", books=books, form=form, page=page, total=total, query=query, paginator=paginator)
 
 
 @app.route('/book/')

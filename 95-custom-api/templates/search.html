@@ -36,7 +36,7 @@
     <section class='section text-muted'>
         {% if books %}
         <div class='container'>
-            <h5>{{query}}</h5>
+            <h5>{{page|int * 10 - 9}} - {{[page|int * 10, total|int]|min}} of {{total}} search results for "{{query}}"</h5>
             <div class='row grid-style'>
                 {% for book in books: %}
                 <div class='pt-4 col-xl-5th col-lg-3 col-md-4 col-sm-6 col-xs-12'>
@@ -58,11 +58,29 @@
             <div class='pt-5'>
                 <nav>
                     <ul class='pagination flex-wrap'>
-                        <li class='page-item'><a href='#' class='page-link'>Previous</a></li>
-                        <li class='page-item active'><span class='page-link'>1</span></li>
-                        <li class='page-item disabled'><span class='page-link'>2</span></li>
-                        <li class='page-item'><a href='#' class='page-link'>3</a></li>
-                        <li class='page-item disabled'><a href='#' class='page-link'>Next</a></li>
+                        {% if page|int > 1 %}
+                        <li class='page-item'>
+                        {% else %}
+                        <li class='page-item disabled'>
+                        {% endif %}
+                            <a href='{{ url_for('search', query=query, page=(page|int - 1)) }}' class='page-link'>Previous</a>
+                        </li>
+                        {% for x in paginator: %}
+                        {% if x == page %}
+                        <li class='page-item active'><span class='page-link'>{{x}}</span></li>
+                        {% elif x == '...' %}
+                        <li class='page-item disabled'><span class='page-link'>{{x}}</span></li>
+                        {% else %}
+                        <li class='page-item'><a href='{{ url_for('search', query=query, page=x) }}' class='page-link'>{{x}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if page|int < (total|int // 10 + 1) %}
+                        <li class='page-item'>
+                        {% else %}
+                        <li class='page-item disabled'>
+                        {% endif %}
+                            <a href='{{ url_for('search', query=query, page=(page|int + 1)) }}' class='page-link'>Next</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
