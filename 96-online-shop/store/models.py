@@ -32,7 +32,7 @@ class Product(models.Model):
 
     price = models.DecimalField(max_digits=4, decimal_places=2)
 
-    #image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/')
 
 
     class Meta:
