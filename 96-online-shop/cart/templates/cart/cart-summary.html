@@ -85,7 +85,7 @@
                 
                 &nbsp;
 
-                <button type="button" id="delete-button"
+                <button type="button" data-index="{{product.id}}"
                   class="btn btn-danger btn-sm delete-button">
                   Delete
                 </button>
@@ -122,6 +122,26 @@
   <br>
 
 </main>
+
+<script>
+  // Delete button
+  $(document).on('click', '.delete-button', function(e){
+    e.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: '{% url "cart-delete" %}',
+        data: {
+            product_id: $(this).data('index'),
+            csrfmiddlewaretoken: "{{csrf_token}}",
+            action: 'post'
+        },
+        success: function(json){
+        },
+        error: function(xhr, errmsg, err){
+        }
+    });
+  })
+</script>
 
 {% endblock %}
 
