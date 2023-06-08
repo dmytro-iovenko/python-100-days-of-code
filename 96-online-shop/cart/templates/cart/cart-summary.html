@@ -136,6 +136,9 @@
             action: 'post'
         },
         success: function(json){
+          location.reload();
+          document.getElementById("cart-qty").textContent = json.qty
+          document.getElementById("total").textContent = json.total
         },
         error: function(xhr, errmsg, err){
         }
