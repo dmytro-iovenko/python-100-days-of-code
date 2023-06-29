@@ -1,1 +1,59 @@
-<h1> Profile management </h1>
+
+{% include "store/base.html" %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <style>
+        body{
+            background-color: gray;
+        }
+    </style>
+
+    <body>
+
+        <br>
+
+        <div class="container bg-white shadow-md p-5 form-layout">
+
+            <h4> Update your account </h4>
+
+            <p> Feel free to make changes to your account. </p>
+
+            <hr>
+
+            <br>
+
+            <form method="POST" autocomplete="off">
+
+                {% csrf_token %}
+
+                {{user_form.username|as_crispy_field}}
+
+
+                <br> <br>
+
+
+                {{user_form.email|as_crispy_field}}
+
+                <br> <br>
+
+                
+                <button type="submit" class="btn btn-primary navbar-btn text-white"> &nbsp; Update your account </button>
+
+
+            </form>
+
+
+        </div>
+
+        <br>
+
+    </body>
+
+    <br> <br>
+
+{% endblock %}
