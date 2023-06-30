@@ -111,4 +111,8 @@ def profile_management(request):
 
 @login_required(login_url='my-login')
 def delete_account(request):
+    user = User.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('store')
     return render(request, 'account/delete-account.html')

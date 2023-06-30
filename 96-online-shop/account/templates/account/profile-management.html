@@ -21,9 +21,9 @@
 
             <h4> Update your account </h4>
 
-            <p> Feel free to make changes to your account. </p>
-
             <hr>
+
+            <p> Feel free to make changes to your account. </p>
 
             <br>
 
@@ -33,24 +33,33 @@
 
                 {{user_form.username|as_crispy_field}}
 
-
                 <br> <br>
-
 
                 {{user_form.email|as_crispy_field}}
 
                 <br> <br>
-
                 
                 <button type="submit" class="btn btn-primary navbar-btn text-white"> &nbsp; Update your account </button>
 
-
             </form>
-
 
         </div>
 
         <br>
+
+        <div class="container bg-white shadow-md p-5 form-layout">
+
+            <h4> Delete your account </h4>
+
+            <hr>
+
+            <p> Proceed if you wish to delete your account.</p>
+
+            <br>
+
+            <a class="btn btn-primary navbar-btn text-white" type="button"  href="{% url 'delete-account' %}"> Delete your account </a>
+
+        </div>
 
     </body>
 
