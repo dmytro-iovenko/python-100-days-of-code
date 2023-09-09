@@ -121,8 +121,10 @@
                 action: 'post'
             },
             success: function(json){
+                window.location.replace("{% url 'payment-success' %}");
             },
             error: function(xhr, errmsg, err){
+                window.location.replace("{% url 'payment-failed' %}");
             }
         });
     })
