@@ -47,7 +47,6 @@ INSTALLED_APPS = [
 ]
 
 # To un-block PayPal popups
-
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
 MIDDLEWARE = [
