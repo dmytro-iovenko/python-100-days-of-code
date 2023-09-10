@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'crispy_forms', # Crispy forms
 ]
 
+# To un-block PayPal popups
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
