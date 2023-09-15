@@ -107,8 +107,10 @@
 
     <script>
 
-    // PayPal Script
+    // Total price
+    var total_price = '{{cart.get_total}}';
 
+    // PayPal Script
     const paypalButtonsComponent = paypal.Buttons({
         // optional styling for buttons
         // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
@@ -148,7 +150,7 @@
             const createOrderPayload = {
                 purchase_units: [{
                     amount: {
-                        value: "88.44"
+                        value: total_price
                     }
                 }]
             };
