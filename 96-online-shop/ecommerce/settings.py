@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Set allowed cidr nets
+ALLOWED_CIDR_NETS = ['172.17.0.0/16']
 
 # Application definition
 
@@ -50,6 +52,8 @@ INSTALLED_APPS = [
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
 MIDDLEWARE = [
+    # Allow CIDR ranges
+    'allow_cidr.middleware.AllowCIDRMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
