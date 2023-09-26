@@ -36,3 +36,6 @@ barchart.set_categories(categories)
 sheet.add_chart(barchart, "B12")
 barchart.title = 'Sales by Product line'
 barchart.style = 5  # choose the chart style
+
+# Save workbook
+wb.save('barchart.xlsx')
