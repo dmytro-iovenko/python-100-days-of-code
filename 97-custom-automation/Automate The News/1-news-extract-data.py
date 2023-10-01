@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import pandas as pd
 
+web = 'https://www.thesun.co.uk/sport/football/'
 path = './chromedriver'  # introduce path here
 
 # Creating the driver
@@ -22,3 +23,10 @@ for container in containers:
     titles.append(title)
     subtitles.append(subtitle)
     links.append(link)
+
+# Exporting data to a CSV file
+my_dict = {'title': titles, 'subtitle': subtitles, 'link': links}
+df_headlines = pd.DataFrame(my_dict)
+df_headlines.to_csv('headline.csv')
+
+driver.quit()
