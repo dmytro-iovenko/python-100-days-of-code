@@ -28,3 +28,9 @@ for container in containers:
     links.append(link)
 
 my_dict = {'title': titles, 'subtitle': subtitles, 'link': links}
+
+# Exporting data to a CSV file
+f_headlines = pd.DataFrame(my_dict)
+df_headlines.to_csv('headline-headless.csv')
+
+driver.quit()
