@@ -8,3 +8,11 @@ Automate some aspect of your life using Python.
 4. Format Cells
 5. Convert Pivot Table to Excel Report
 
+### Automate The News:
+1. Installing Selenium and ChromeDriver
+2. Creating The Driver
+3. Finding Elements
+4. Exporting Data to a CSV File
+5. Headless mode
+
+### Table Extraction:
