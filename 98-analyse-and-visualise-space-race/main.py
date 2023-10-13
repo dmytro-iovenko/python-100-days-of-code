@@ -16,3 +16,12 @@ print("The column names are as follows: ",df_data.columns)
 
 # Check for NaN values or duplicates
 df_data.isna()
+
+# Remove columns with junk data
+df_data = df_data.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
+
+# Clean duplicates
+df_data = df_data.drop_duplicates()
+
+# Change the name of a column
+df_data = df_data.rename({'Detail': 'Launches'}, axis=1)
