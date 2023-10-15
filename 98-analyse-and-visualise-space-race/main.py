@@ -25,3 +25,19 @@ df_data = df_data.drop_duplicates()
 
 # Change the name of a column
 df_data = df_data.rename({'Detail': 'Launches'}, axis=1)
+
+
+# Descriptive statistics
+df_data.info()
+
+df_data.describe()
+
+df_data[df_data["Price"].notna()]["Price"].str.replace(',', '').astype(float).describe()
+
+# Extracting data from the Date column
+df_data['Year'] = pd.to_datetime(pd.to_datetime(df['Date'], utc=True).dt.strftime('%Y'))
+df_data['Year_and_Month'] = pd.to_datetime(pd.to_datetime(df['Date'], utc=True).dt.strftime('%Y-%m'))
+
+df_data['Year_number'] = pd.to_datetime(df['Date'], utc=True).dt.year
+df_data['Month_name'] = pd.to_datetime(df['Date'], utc=True).dt.month_name()
+df_data['Month_number'] = pd.to_datetime(df['Date'], utc=True).dt.month
