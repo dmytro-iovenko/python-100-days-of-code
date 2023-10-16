@@ -41,3 +41,7 @@ df_data['Year_and_Month'] = pd.to_datetime(pd.to_datetime(df['Date'], utc=True).
 df_data['Year_number'] = pd.to_datetime(df['Date'], utc=True).dt.year
 df_data['Month_name'] = pd.to_datetime(df['Date'], utc=True).dt.month_name()
 df_data['Month_number'] = pd.to_datetime(df['Date'], utc=True).dt.month
+
+# Create a chart that shows the number of space mission launches by organisation.
+df_data['Organisation'].value_counts().plot()
+
