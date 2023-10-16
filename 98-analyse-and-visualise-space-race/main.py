@@ -45,3 +45,6 @@ df_data['Month_number'] = pd.to_datetime(df['Date'], utc=True).dt.month
 # Create a chart that shows the number of space mission launches by organisation.
 df_data['Organisation'].value_counts().plot()
 
+# Get number of active vs retired rockets
+df_data["Rocket_Status"].value_counts()
+df_data["Rocket_Status"].value_counts().sort_values().plot(kind="barh")
