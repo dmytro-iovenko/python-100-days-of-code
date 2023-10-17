@@ -48,3 +48,9 @@ df_data['Organisation'].value_counts().plot()
 # Get number of active vs retired rockets
 df_data["Rocket_Status"].value_counts()
 df_data["Rocket_Status"].value_counts().sort_values().plot(kind="barh")
+
+# How many missions were successful?
+df_data["Mission_Status"].value_counts()
+
+# How many missions failed?
+df_data.groupby("Mission_Status").agg({"Mission_Status":pd.Series.count})
