@@ -1,4 +1,5 @@
 import pandas as pd
+import plotly.express as px
 
 # Load the data
 df_data = pd.read_csv('mission_launches.csv')
@@ -54,3 +55,6 @@ df_data["Mission_Status"].value_counts()
 
 # How many missions failed?
 df_data.groupby("Mission_Status").agg({"Mission_Status":pd.Series.count})
+
+# Get a histogram and visualise the distributio
+px.histogram(df_data.sort_values(by=["Organisation", "Price"], ascending=[False, False]), x="Price",nbins=10) 
