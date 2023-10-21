@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+import iso3166 as iso
 
 # Load the data
 df_data = pd.read_csv('mission_launches.csv')
@@ -58,3 +59,29 @@ df_data.groupby("Mission_Status").agg({"Mission_Status":pd.Series.count})
 
 # Get a histogram and visualise the distributio
 px.histogram(df_data.sort_values(by=["Organisation", "Price"], ascending=[False, False]), x="Price",nbins=10) 
+
+# Show the number of launches by country
+f_data["Country"] = df_data["Location"].str.split(", ").str[-1]
+
+df_data.loc[(df_data["Country"] == 'Russia'), "Country"] = "Russian Federation"
+df_data.loc[(df_data["Country"] == 'New Mexico'), "Country"] = "USA"
+df_data.loc[(df_data["Country"] == 'Yellow Sea'), "Country"] = "China"
+df_data.loc[(df_data["Country"] == 'Shahrud Missile Test Site'), "Country"] = "Iran"
+df_data.loc[(df_data["Country"] == 'Pacific Missile Range Facility'), "Country"] = "USA"
+df_data.loc[(df_data["Country"] == 'Barents Sea'), "Country"] = "Russian Federation"
+df_data.loc[(df_data["Country"] == 'Gran Canaria'), "Country"] = "USA"
+df_data.loc[(df_data["Country"] == 'Iran'), "Country"] = "Iran, Islamic Republic of"
+df_data.loc[(df_data["Country"] == 'South Korea'), "Country"] = "Korea, Republic of"
+df_data.loc[(df_data["Country"] == 'North Korea'), "Country"] = "Korea, Democratic People's Republic of"
+df_data.loc[(df_data["Country"] == 'Kazakhstan'), "Country"] = "Russian Federation"
+
+countries = {country.name: key for key, country in iso.countries_by_alpha3.items()}
+df_data = df_data.replace({"Country": countries})
+
+launches = df_data["Country"].value_counts().rename_axis("Country").reset_index(name='counts')
+launches.head()
+
+world_map = px.choropleth(launches, locations="Country", color="counts", color_continuous_scale=px.colors.sequential.matter)
+world_map.update_layout(coloraxis_showscale=True)
+world_map.show()
+df_data.head()
