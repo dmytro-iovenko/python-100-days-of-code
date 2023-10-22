@@ -85,3 +85,11 @@ world_map = px.choropleth(launches, locations="Country", color="counts", color_c
 world_map.update_layout(coloraxis_showscale=True)
 world_map.show()
 df_data.head()
+
+# Show the number of failures by country
+statuses = df_data.groupby("Country")["Mission_Status"].value_counts().rename_axis(["Country", "Status"]).reset_index(name='counts')
+failures = statuses[statuses["Status"].str.contains("Fail")].groupby("Country").sum()
+
+world_map = px.choropleth(failures, locations=failures.index, color="counts", color_continuous_scale=px.colors.sequential.matter)
+world_map.update_layout(coloraxis_showscale=True) 
+world_map.show()
