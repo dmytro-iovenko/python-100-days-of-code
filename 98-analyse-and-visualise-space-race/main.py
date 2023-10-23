@@ -93,3 +93,9 @@ failures = statuses[statuses["Status"].str.contains("Fail")].groupby("Country").
 world_map = px.choropleth(failures, locations=failures.index, color="counts", color_continuous_scale=px.colors.sequential.matter)
 world_map.update_layout(coloraxis_showscale=True) 
 world_map.show()
+
+# Create a Plotly Sunburst Chart of the countries, organisations, and mission status
+sunburst = df_data.groupby(by=["Country", "Organisation", "Mission_Status"], as_index=False).size()
+sunburst = sunburst.sort_values("size", ascending=False)
+sunburst.head()
+px.sunburst(sunburst, path=["Country", "Organisation", "Mission_Status"], values="size", title="Missions By Country")
