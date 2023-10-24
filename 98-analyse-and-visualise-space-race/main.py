@@ -109,3 +109,8 @@ money_spent["Price"] = money_spent["Price"].str.replace(',', '').astype(float)
 total_money_spent = money_spent.groupby("Organisation")["Price"].sum().reset_index()
 total_money_spent.sort_values(by="Price", ascending=False)
 total_money_spent.head()
+
+# Analyse the amount of money spent by organisation per launch
+organisation_expense = money_spent.groupby("Organisation")["Price"].mean().reset_index()
+organisation_expense.sort_values("Price", ascending=False)
+organisation_expense.head()
