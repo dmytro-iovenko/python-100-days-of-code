@@ -99,3 +99,13 @@ sunburst = df_data.groupby(by=["Country", "Organisation", "Mission_Status"], as_
 sunburst = sunburst.sort_values("size", ascending=False)
 sunburst.head()
 px.sunburst(sunburst, path=["Country", "Organisation", "Mission_Status"], values="size", title="Missions By Country")
+
+
+# Analyse the total amount of money spent by organisation on space missions
+money_spent = df_data[df_data["Price"].notna()]
+
+money_spent["Price"] = money_spent["Price"].str.replace(',', '').astype(float)
+
+total_money_spent = money_spent.groupby("Organisation")["Price"].sum().reset_index()
+total_money_spent.sort_values(by="Price", ascending=False)
+total_money_spent.head()
