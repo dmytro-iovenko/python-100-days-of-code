@@ -114,3 +114,24 @@ total_money_spent.head()
 organisation_expense = money_spent.groupby("Organisation")["Price"].mean().reset_index()
 organisation_expense.sort_values("Price", ascending=False)
 organisation_expense.head()
+
+# Converted the date to the datetime object, then extracted the year from the datetime object.
+df_data['date'] = pd.to_datetime(df_data['Date'])
+df_data['year'] = df_data['date'].apply(lambda datetime: datetime.year)
+# df_data['year'].head()
+
+# Counted the number of times the same year is mentioned.
+ds = df_data['year'].value_counts().reset_index()
+ds.columns = [
+    'year', 
+    'count'
+]
+# Passing the year and the count to the bar graph.
+fig = px.bar(
+    ds, 
+    x='year', 
+    y="count", 
+    orientation='v', 
+    title='Missions number by year' 
+)
+fig.show()
