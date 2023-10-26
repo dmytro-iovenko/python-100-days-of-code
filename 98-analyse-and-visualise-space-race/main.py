@@ -135,3 +135,28 @@ fig = px.bar(
     title='Missions number by year' 
 )
 fig.show()
+
+'''
+Which month has seen the highest number of launches in all time? Superimpose a rolling average on the month on month time series chart.
+'''
+
+# Converted the date to the datetime object, then extracted the month from the datetime object.
+df_data['date'] = pd.to_datetime(df_data['Date'])
+df_data['month'] = df_data['date'].apply(lambda datetime: datetime.month)
+# df_data['month'].head()
+
+# Counted the number of times the same month is mentioned.
+ds = df_data['month'].value_counts().reset_index()
+ds.columns = [
+    'month', 
+    'count'
+]
+# Passing the year and the count to the bar graph.
+fig = px.bar(
+    ds, 
+    x='month', 
+    y="count", 
+    orientation='v', 
+    title='Missions number by month' 
+)
+fig.show()
