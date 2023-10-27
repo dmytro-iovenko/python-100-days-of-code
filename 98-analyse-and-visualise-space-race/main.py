@@ -160,3 +160,16 @@ fig = px.bar(
     title='Missions number by month' 
 )
 fig.show()
+
+# Using max to find the most launches per month
+most_launches = ds['count'].max()
+print("Most launches in a month =", most_launches)
+
+# print the month associated with the max value
+ds.sort_values(by="count", ascending=False)
+ds.max()
+
+#Using min to find the least launches per month
+least_launches = ds['count'].min()
+print("Least launches in a month =", least_launches)
+ds.min()
