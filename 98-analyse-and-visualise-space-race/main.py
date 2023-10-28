@@ -173,3 +173,10 @@ ds.max()
 least_launches = ds['count'].min()
 print("Least launches in a month =", least_launches)
 ds.min()
+
+# Create a line chart that shows the average price of rocket launches over time
+avg_price = df_data[df_data["Price"].notna()]
+pd.options.mode.chained_assignment = None
+avg_price["Price"] = avg_price["Price"].str.replace(',', '').astype(float)
+
+avg_price.groupby("year").mean().plot(figsize=(12, 8))
