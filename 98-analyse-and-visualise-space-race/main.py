@@ -180,3 +180,14 @@ pd.options.mode.chained_assignment = None
 avg_price["Price"] = avg_price["Price"].str.replace(',', '').astype(float)
 
 avg_price.groupby("year").mean().plot(figsize=(12, 8))
+
+# Grab data from Organisations and Locations columns
+# Sort through data to find the top 10 Organisations 
+top_10=pd.DataFrame(columns=df_data.columns)
+for val in df_data.groupby("Organisation").count().sort_values("Date",ascending=False)[:10].index:
+  print(val)
+  org=df_data[df_data.Organisation==val]
+  top_10=top_10.append(org,ignore_index=False, verify_integrity=False, sort=None)
+
+# Create a chart to display the data
+px.histogram(top_10.sort_values(by=["Organisation", "Date"], ascending=[True, False]), x="Organisation",nbins=10) 
