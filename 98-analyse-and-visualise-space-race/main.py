@@ -191,3 +191,11 @@ for val in df_data.groupby("Organisation").count().sort_values("Date",ascending=
 
 # Create a chart to display the data
 px.histogram(top_10.sort_values(by=["Organisation", "Date"], ascending=[True, False]), x="Organisation",nbins=10) 
+
+
+# Cold war space race: USA vs USSR
+Or_df = df_data[(df_data['Country']=='USA') | (df_data['Country']=='RUS')]
+# Sort years
+cold_war_years = Or_df.sort_values("year")
+# Grab years from start of dataset (1964) til 1991
+cold_war_years[(cold_war_years.year <= 1991)]
