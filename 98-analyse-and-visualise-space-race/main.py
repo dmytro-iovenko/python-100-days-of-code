@@ -215,3 +215,7 @@ sizes = grouping['Mission_Status']
 labels = grouping['Country']
 
 plt.pie(sizes, labels = labels, colors = colors)
+
+# Plot chart to show the total number of launches year-on-year
+Or_df = df_data[(df_data['Country']=='USA') | (df_data['Country']=='RUS')]
+Or_df.groupby(["year", "Country"]).size().unstack().plot()
