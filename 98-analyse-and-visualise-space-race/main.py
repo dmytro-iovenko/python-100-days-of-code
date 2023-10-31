@@ -219,3 +219,9 @@ plt.pie(sizes, labels = labels, colors = colors)
 # Plot chart to show the total number of launches year-on-year
 Or_df = df_data[(df_data['Country']=='USA') | (df_data['Country']=='RUS')]
 Or_df.groupby(["year", "Country"]).size().unstack().plot()
+
+# Chart the total number of mission failures year-on-year
+Or_df = df_data[df_data['Mission_Status'].str.contains("Failure")]
+yearly_failures = px.data.tips()
+fig = px.sunburst(Or_df, path=["year", "Mission_Status"])
+fig.show()
