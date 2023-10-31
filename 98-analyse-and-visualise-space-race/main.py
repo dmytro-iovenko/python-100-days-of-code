@@ -199,3 +199,19 @@ Or_df = df_data[(df_data['Country']=='USA') | (df_data['Country']=='RUS')]
 cold_war_years = Or_df.sort_values("year")
 # Grab years from start of dataset (1964) til 1991
 cold_war_years[(cold_war_years.year <= 1991)]
+
+# Comparing the total number of launches of the USSR and the USA
+# Grab the data for USA and for Russian Federation (aka USSR)
+Or_df = df_data[(df_data['Country']=='USA') | (df_data['Country']=='RUS')]
+
+# Do not need to count the data - since the pie chart will collect the data per country. However, getting the count will help us to know if the data pulled into the pie chart is accurate.
+launches = Or_df['Country'].value_counts().rename_axis('Country').reset_index(name='counts')
+launches.head()
+
+# Plot chart using Country and Mission_Status
+colors = ["#1f77b4", "#ff7f0e"]
+grouping = Or_df.groupby("Country").count().reset_index()
+sizes = grouping['Mission_Status']
+labels = grouping['Country']
+
+plt.pie(sizes, labels = labels, colors = colors)
