@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.express as px
 import iso3166 as iso
+import matplotlib.pyplot as plt
 
 # Load the data
 df_data = pd.read_csv('mission_launches.csv')
@@ -225,3 +226,13 @@ Or_df = df_data[df_data['Mission_Status'].str.contains("Failure")]
 yearly_failures = px.data.tips()
 fig = px.sunburst(Or_df, path=["year", "Mission_Status"])
 fig.show()
+
+# Chart the percentage of failures over time
+grouping = Or_df.groupby("year").count().reset_index()
+sizes = grouping['Mission_Status']
+labels = grouping['year']
+
+plt.pie(sizes, labels = labels)
+fig = plt.gcf()
+fig.set_size_inches(15,15)
+plt.show()
