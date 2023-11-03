@@ -236,3 +236,20 @@ plt.pie(sizes, labels = labels)
 fig = plt.gcf()
 fig.set_size_inches(15,15)
 plt.show()
+
+# Create a year-on-year chart showing the organisation doing the most number of launches
+org_launches = df_data.groupby("year")["Organisation"].value_counts().rename_axis(["year", "Organisation"]).reset_index(name='counts')
+
+# Group by year, then by country, then find max count
+org_launches.loc[org_launches.groupby("year")["counts"].idxmax()]
+org_launches.head()
+
+org_set = set(org_launches['Organisation'])
+
+plt.figure(figsize=(12, 10), dpi=80)
+for org in org_set:
+     selected_data = org_launches.loc[org_launches['Organisation'] == org]
+     plt.plot(selected_data['year'], selected_data['counts'], label=org)
+   
+plt.legend()
+plt.show()
