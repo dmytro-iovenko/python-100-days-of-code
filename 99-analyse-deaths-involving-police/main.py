@@ -13,3 +13,9 @@ data.duplicated().values.any()
 
 print(data.shape)
 data.head()
+
+# Converting date column to datetime index
+data["date"] = pd.DatetimeIndex(data["date"]).year
+data.rename(columns = {'date':'year'}, inplace = True)
+
+data.info()
