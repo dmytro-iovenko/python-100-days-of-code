@@ -34,3 +34,18 @@ r_bar = px.bar(race_death_rate,
 r_bar.update_layout(xaxis_title="year",
                     yaxis_title="deaths count")
 r_bar.show()
+
+# Get death rate on years by gender
+gender_death_rate = data.groupby(["year","gender"],as_index=False).agg({"name":pd.Series.count})
+gender_death_rate.rename({"name":"deaths_count"},axis=1,inplace=True)
+gender_death_rate.head()
+
+g_bar = px.bar(gender_death_rate,
+               x="year",
+               y="deaths_count",
+               color="gender",
+               title="deaths people over the years by gender",
+               barmode="group")
+g_bar.update_layout(xaxis_title="year",
+                    yaxis_title="deaths count")
+g_bar.show()
