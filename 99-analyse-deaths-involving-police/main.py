@@ -49,3 +49,17 @@ g_bar = px.bar(gender_death_rate,
 g_bar.update_layout(xaxis_title="year",
                     yaxis_title="deaths count")
 g_bar.show()
+
+# Get death rate on years by age
+age_death_rate = data.groupby(["year","age"],as_index=False).agg({"name":pd.Series.count})
+age_death_rate.rename({"name":"deaths_count"},axis=1,inplace=True)
+age_death_rate.head()
+
+a_bar = px.bar(age_death_rate,
+               x="year",
+               y="deaths_count",
+               color="age",
+               title="deaths people over the years by age")
+a_bar.update_layout(xaxis_title="year",
+                    yaxis_title="deaths count")
+a_bar.show()
