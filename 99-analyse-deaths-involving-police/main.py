@@ -63,3 +63,15 @@ a_bar = px.bar(age_death_rate,
 a_bar.update_layout(xaxis_title="year",
                     yaxis_title="deaths count")
 a_bar.show()
+
+# Get death rate on years by city and state
+state_city_deaths = data.groupby(["state","city"],as_index=False).agg({"name":pd.Series.count})
+state_city_deaths.rename({"name":"deaths_count"},axis=1,inplace=True)
+state_city_deaths.head()
+
+a_sun = px.sunburst(state_city_deaths,
+               names="city",
+               parents="state",
+               values="deaths_count",
+               title="deaths people over the years by city and state")
+a_sun.show()
