@@ -75,3 +75,12 @@ a_sun = px.sunburst(state_city_deaths,
                values="deaths_count",
                title="deaths people over the years by city and state")
 a_sun.show()
+
+# Count people who killed was armed
+is_armed = data.value_counts("armed")
+is_armed.head()
+
+a_pie = px.pie(names=is_armed.index,
+               values=is_armed.values,
+               title="was people who killed armed?")
+a_pie.show()
