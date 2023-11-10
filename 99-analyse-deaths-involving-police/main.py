@@ -84,3 +84,13 @@ a_pie = px.pie(names=is_armed.index,
                values=is_armed.values,
                title="was people who killed armed?")
 a_pie.show()
+
+# Count people who killed had signs_of_mental_illness
+is_mentally_ill = data.value_counts("signs_of_mental_illness")
+is_mentally_ill.head()
+
+i_pie = px.pie(names=is_mentally_ill.index,
+               values=is_mentally_ill.values,
+               color=is_mentally_ill.values,
+               title="was people who killed had signs_of_mental_illness?")
+i_pie.show()
