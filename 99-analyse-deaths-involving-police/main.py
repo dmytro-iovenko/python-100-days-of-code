@@ -94,3 +94,14 @@ i_pie = px.pie(names=is_mentally_ill.index,
                color=is_mentally_ill.values,
                title="was people who killed had signs_of_mental_illness?")
 i_pie.show()
+
+# Count people who killed had body_camera
+has_body_camera = data.value_counts("body_camera")
+has_body_camera.head()
+
+c_pie = px.pie(names=has_body_camera.index,
+               values=has_body_camera.values,
+               color=has_body_camera.values,
+               title="was people who killed had has_body_camera?"
+               ,hole=.3)
+c_pie.show()
