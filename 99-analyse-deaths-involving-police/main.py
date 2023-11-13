@@ -105,3 +105,20 @@ c_pie = px.pie(names=has_body_camera.index,
                title="was people who killed had has_body_camera?"
                ,hole=.3)
 c_pie.show()
+
+# Get top 20 police_departments_killed
+police_departments_killed = data.groupby("police_departments_involved",as_index=False).agg({"name":pd.Series.count})
+police_departments_killed.rename({"name":"deaths_count"},axis=1,inplace=True)
+police_departments_killed.sort_values("deaths_count",ascending=False,inplace=True)
+
+top_20_police_departments_killers = police_departments_killed[:20]
+top_20_police_departments_killers.head()
+
+d_bar = px.bar(top_20_police_departments_killers,
+               x="police_departments_involved",
+               y="deaths_count",
+               color="deaths_count",
+               title="deaths people over the years by responsive police department top 20")
+d_bar.update_layout(xaxis_title="year",
+                    yaxis_title="deaths count")
+d_bar.show()
